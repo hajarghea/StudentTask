@@ -1,10 +1,10 @@
-// ============================================
+// ==================================================
 // DATA
-// ============================================
+// ==================================================
 
 let tasks =
     JSON.parse(
-        localStorage.getItem("tasks")
+        localStorage.getItem("studentTasks")
     ) || [];
 
 
@@ -13,23 +13,28 @@ let currentFilter = "all";
 let editTaskId = null;
 
 
-// ============================================
-// SIMPAN DATA
-// ============================================
+// Kalender
 
-function saveTasksToStorage() {
+let calendarDate = new Date();
+
+
+// ==================================================
+// SIMPAN DATA
+// ==================================================
+
+function saveData() {
 
     localStorage.setItem(
-        "tasks",
+        "studentTasks",
         JSON.stringify(tasks)
     );
 
 }
 
 
-// ============================================
-// SIMPAN / TAMBAH / EDIT TUGAS
-// ============================================
+// ==================================================
+// TAMBAH / EDIT TUGAS
+// ==================================================
 
 function saveTask() {
 
@@ -57,11 +62,13 @@ function saveTask() {
         ).value;
 
 
-    // ========================================
-    // VALIDASI
-    // ========================================
+    const priority =
+        document.getElementById(
+            "priorityInput"
+        ).value;
 
-    if (course === "") {
+
+    if (!course) {
 
         alert(
             "Silakan pilih mata kuliah!"
@@ -72,7 +79,7 @@ function saveTask() {
     }
 
 
-    if (title === "") {
+    if (!title) {
 
         alert(
             "Silakan masukkan nama tugas!"
@@ -83,7 +90,7 @@ function saveTask() {
     }
 
 
-    if (date === "") {
+    if (!date) {
 
         alert(
             "Silakan pilih tanggal deadline!"
@@ -94,7 +101,7 @@ function saveTask() {
     }
 
 
-    if (time === "") {
+    if (!time) {
 
         alert(
             "Silakan pilih jam deadline!"
@@ -105,9 +112,9 @@ function saveTask() {
     }
 
 
-    // ========================================
-    // MODE EDIT
-    // ========================================
+    // ==============================================
+    // EDIT
+    // ==============================================
 
     if (editTaskId !== null) {
 
@@ -123,13 +130,15 @@ function saveTask() {
 
                             ...task,
 
-                            course: course,
+                            course,
 
-                            title: title,
+                            title,
 
-                            date: date,
+                            date,
 
-                            time: time
+                            time,
+
+                            priority
 
                         };
 
@@ -151,46 +160,47 @@ function saveTask() {
     }
 
 
-    // ========================================
-    // MODE TAMBAH
-    // ========================================
+    // ==============================================
+    // TAMBAH
+    // ==============================================
 
     else {
 
-        const newTask = {
+        tasks.push({
 
             id: Date.now(),
 
-            course: course,
+            course,
 
-            title: title,
+            title,
 
-            date: date,
+            date,
 
-            time: time,
+            time,
+
+            priority,
 
             completed: false
 
-        };
-
-
-        tasks.push(newTask);
+        });
 
     }
 
 
-    saveTasksToStorage();
+    saveData();
 
     clearForm();
 
     displayTasks();
 
+    renderCalendar();
+
 }
 
 
-// ============================================
-// BERSIHKAN FORM
-// ============================================
+// ==================================================
+// CLEAR FORM
+// ==================================================
 
 function clearForm() {
 
@@ -213,12 +223,17 @@ function clearForm() {
         "timeInput"
     ).value = "";
 
+
+    document.getElementById(
+        "priorityInput"
+    ).value = "medium";
+
 }
 
 
-// ============================================
+// ==================================================
 // FORMAT TANGGAL INDONESIA
-// ============================================
+// ==================================================
 
 function formatDate(dateString) {
 
@@ -244,23 +259,66 @@ function formatDate(dateString) {
 }
 
 
-// ============================================
+// ==================================================
+// PRIORITAS
+// ==================================================
+
+function getPriority(priority) {
+
+    if (priority === "high") {
+
+        return {
+
+            text: "🔴 Prioritas Tinggi",
+
+            className:
+                "priority-high"
+
+        };
+
+    }
+
+
+    if (priority === "low") {
+
+        return {
+
+            text: "🟢 Prioritas Rendah",
+
+            className:
+                "priority-low"
+
+        };
+
+    }
+
+
+    return {
+
+        text: "🟡 Prioritas Sedang",
+
+        className:
+            "priority-medium"
+
+    };
+
+}
+
+
+// ==================================================
 // STATUS DEADLINE
-// ============================================
+// ==================================================
 
 function getDeadlineStatus(task) {
 
-    // Jika selesai
     if (task.completed) {
 
         return {
 
+            text: "✅ Tugas selesai",
+
             className:
-                "status-completed",
-
-            icon: "✅",
-
-            text: "Tugas selesai"
+                "status-completed"
 
         };
 
@@ -277,9 +335,7 @@ function getDeadlineStatus(task) {
         );
 
 
-    // ========================================
-    // TERLAMBAT
-    // ========================================
+    // Terlambat
 
     if (
         deadline.getTime() <
@@ -288,21 +344,15 @@ function getDeadlineStatus(task) {
 
         return {
 
+            text: "⚠️ Terlambat",
+
             className:
-                "status-late",
-
-            icon: "⚠️",
-
-            text: "Terlambat"
+                "status-late"
 
         };
 
     }
 
-
-    // ========================================
-    // TANGGAL HARI INI
-    // ========================================
 
     const today =
         new Date();
@@ -315,10 +365,6 @@ function getDeadlineStatus(task) {
     );
 
 
-    // ========================================
-    // TANGGAL BESOK
-    // ========================================
-
     const tomorrow =
         new Date(today);
 
@@ -327,7 +373,6 @@ function getDeadlineStatus(task) {
     );
 
 
-    // Tanggal deadline
     const deadlineDate =
         new Date(deadline);
 
@@ -339,10 +384,6 @@ function getDeadlineStatus(task) {
     );
 
 
-    // ========================================
-    // DEADLINE HARI INI
-    // ========================================
-
     if (
         deadlineDate.getTime() ===
         today.getTime()
@@ -350,21 +391,15 @@ function getDeadlineStatus(task) {
 
         return {
 
+            text: "🔴 Deadline hari ini",
+
             className:
-                "status-today",
-
-            icon: "🔴",
-
-            text: "Deadline hari ini"
+                "status-today"
 
         };
 
     }
 
-
-    // ========================================
-    // DEADLINE BESOK
-    // ========================================
 
     if (
         deadlineDate.getTime() ===
@@ -373,54 +408,42 @@ function getDeadlineStatus(task) {
 
         return {
 
+            text: "🟠 Deadline besok",
+
             className:
-                "status-tomorrow",
-
-            icon: "🟠",
-
-            text: "Deadline besok"
+                "status-tomorrow"
 
         };
 
     }
 
 
-    // ========================================
-    // MASIH AMAN
-    // ========================================
-
     return {
 
+        text: "🟢 Masih aman",
+
         className:
-            "status-safe",
-
-        icon: "🟢",
-
-        text: "Masih aman"
+            "status-safe"
 
     };
 
 }
 
 
-// ============================================
+// ==================================================
 // TAMPILKAN TUGAS
-// ============================================
+// ==================================================
 
 function displayTasks() {
 
-    const taskList =
+    const list =
         document.getElementById(
             "taskList"
         );
 
 
-    taskList.innerHTML = "";
+    list.innerHTML = "";
 
-
-    // ========================================
-    // PENCARIAN
-    // ========================================
 
     const search =
         document.getElementById(
@@ -430,29 +453,25 @@ function displayTasks() {
             .trim();
 
 
-    let filteredTasks =
+    const sort =
+        document.getElementById(
+            "sortInput"
+        ).value;
+
+
+    let filtered =
         tasks.filter(
             task => {
 
-                const course =
-                    task.course ||
-                    "";
-
-
-                const title =
-                    task.title ||
-                    "";
-
-
                 return (
 
-                    course
+                    task.title
                         .toLowerCase()
                         .includes(search)
 
                     ||
 
-                    title
+                    task.course
                         .toLowerCase()
                         .includes(search)
 
@@ -462,16 +481,14 @@ function displayTasks() {
         );
 
 
-    // ========================================
-    // FILTER STATUS
-    // ========================================
+    // Filter status
 
     if (
         currentFilter === "pending"
     ) {
 
-        filteredTasks =
-            filteredTasks.filter(
+        filtered =
+            filtered.filter(
                 task =>
                     !task.completed
             );
@@ -483,8 +500,8 @@ function displayTasks() {
         currentFilter === "completed"
     ) {
 
-        filteredTasks =
-            filteredTasks.filter(
+        filtered =
+            filtered.filter(
                 task =>
                     task.completed
             );
@@ -492,15 +509,86 @@ function displayTasks() {
     }
 
 
-    // ========================================
-    // JIKA TIDAK ADA TUGAS
-    // ========================================
+    // ==================================================
+    // SORTING
+    // ==================================================
+
+    if (sort === "nearest") {
+
+        filtered.sort(
+            (a, b) => {
+
+                return getDeadline(a)
+                    - getDeadline(b);
+
+            }
+        );
+
+    }
+
+
+    if (sort === "farthest") {
+
+        filtered.sort(
+            (a, b) => {
+
+                return getDeadline(b)
+                    - getDeadline(a);
+
+            }
+        );
+
+    }
+
+
+    if (sort === "name") {
+
+        filtered.sort(
+            (a, b) =>
+
+                a.title.localeCompare(
+                    b.title
+                )
+
+        );
+
+    }
+
+
+    if (sort === "priority") {
+
+        const order = {
+
+            high: 1,
+
+            medium: 2,
+
+            low: 3
+
+        };
+
+
+        filtered.sort(
+            (a, b) =>
+
+                order[a.priority]
+                -
+                order[b.priority]
+
+        );
+
+    }
+
+
+    // ==================================================
+    // KOSONG
+    // ==================================================
 
     if (
-        filteredTasks.length === 0
+        filtered.length === 0
     ) {
 
-        taskList.innerHTML = `
+        list.innerHTML = `
 
             <div class="empty-task">
 
@@ -517,70 +605,67 @@ function displayTasks() {
     }
 
 
-    // ========================================
-    // TAMPILKAN TUGAS
-    // ========================================
+    // ==================================================
+    // TAMPILKAN
+    // ==================================================
 
-    filteredTasks.forEach(
+    filtered.forEach(
         task => {
 
-            const taskElement =
+            const priority =
+                getPriority(
+                    task.priority
+                );
+
+
+            const status =
+                getDeadlineStatus(
+                    task
+                );
+
+
+            const element =
                 document.createElement(
                     "div"
                 );
 
 
-            taskElement.className =
+            element.className =
                 "task";
 
 
-            if (task.completed) {
+            if (
+                task.completed
+            ) {
 
-                taskElement.classList.add(
+                element.classList.add(
                     "completed"
                 );
 
             }
 
 
-            const formattedDate =
-                formatDate(
-                    task.date
-                );
-
-
-            const deadlineStatus =
-                getDeadlineStatus(
-                    task
-                );
-
-
-            taskElement.innerHTML = `
+            element.innerHTML = `
 
                 <div class="task-info">
 
                     <div class="course-name">
 
-                        📚 ${
-                            task.course ||
-                            "Mata Kuliah"
-                        }
+                        📚 ${task.course}
 
                     </div>
 
 
                     <div class="task-title">
 
-                        ${
-                            task.title
-                        }
+                        ${task.title}
 
                     </div>
 
 
                     <div class="task-date">
 
-                        📅 ${formattedDate}
+                        📅 ${formatDate(task.date)}
 
                         &nbsp;&nbsp;
 
@@ -589,18 +674,25 @@ function displayTasks() {
                     </div>
 
 
-                    <div
+                    <span
+                        class="priority ${priority.className}"
+                    >
+
+                        ${priority.text}
+
+                    </span>
+
+
+                    <span
                         class="
                             deadline-status
-                            ${deadlineStatus.className}
+                            ${status.className}
                         "
                     >
 
-                        ${deadlineStatus.icon}
+                        ${status.text}
 
-                        ${deadlineStatus.text}
-
-                    </div>
+                    </span>
 
                 </div>
 
@@ -616,8 +708,8 @@ function displayTasks() {
 
                         ${
                             task.completed
-                                ? "Batal"
-                                : "Selesai"
+                            ? "↩ Batal"
+                            : "✅ Selesai"
                         }
 
                     </button>
@@ -651,8 +743,8 @@ function displayTasks() {
             `;
 
 
-            taskList.appendChild(
-                taskElement
+            list.appendChild(
+                element
             );
 
         }
@@ -664,213 +756,22 @@ function displayTasks() {
 }
 
 
-// ============================================
-// EDIT TUGAS
-// ============================================
+// ==================================================
+// DEADLINE DATE
+// ==================================================
 
-function editTask(id) {
+function getDeadline(task) {
 
-    const task =
-        tasks.find(
-            task =>
-                task.id === id
-        );
-
-
-    if (!task) {
-
-        return;
-
-    }
-
-
-    // Masukkan data ke form
-
-    document.getElementById(
-        "courseInput"
-    ).value =
-        task.course;
-
-
-    document.getElementById(
-        "taskInput"
-    ).value =
-        task.title;
-
-
-    document.getElementById(
-        "dateInput"
-    ).value =
-        task.date;
-
-
-    document.getElementById(
-        "timeInput"
-    ).value =
-        task.time;
-
-
-    // Simpan ID tugas yang diedit
-
-    editTaskId = id;
-
-
-    // Ubah judul form
-
-    document.getElementById(
-        "formTitle"
-    ).textContent =
-        "✏️ Edit Tugas";
-
-
-    // Ubah tombol
-
-    document.getElementById(
-        "saveButton"
-    ).textContent =
-        "💾 Simpan Perubahan";
-
-
-    // Tampilkan tombol batal
-
-    document.getElementById(
-        "cancelButton"
-    ).style.display =
-        "block";
-
-
-    // Scroll ke form
-
-    document.getElementById(
-        "formTitle"
-    ).scrollIntoView({
-        behavior: "smooth"
-    });
+    return new Date(
+        `${task.date}T${task.time}`
+    ).getTime();
 
 }
 
 
-// ============================================
-// BATAL EDIT
-// ============================================
-
-function cancelEdit() {
-
-    editTaskId = null;
-
-
-    document.getElementById(
-        "formTitle"
-    ).textContent =
-        "➕ Tambah Tugas";
-
-
-    document.getElementById(
-        "saveButton"
-    ).textContent =
-        "+ Tambah Tugas";
-
-
-    document.getElementById(
-        "cancelButton"
-    ).style.display =
-        "none";
-
-
-    clearForm();
-
-}
-
-
-// ============================================
-// TANDAI SELESAI
-// ============================================
-
-function toggleTask(id) {
-
-    tasks =
-        tasks.map(
-            task => {
-
-                if (
-                    task.id === id
-                ) {
-
-                    return {
-
-                        ...task,
-
-                        completed:
-                            !task.completed
-
-                    };
-
-                }
-
-
-                return task;
-
-            }
-        );
-
-
-    saveTasksToStorage();
-
-    displayTasks();
-
-}
-
-
-// ============================================
-// HAPUS TUGAS
-// ============================================
-
-function deleteTask(id) {
-
-    const confirmDelete =
-        confirm(
-            "Apakah kamu yakin ingin menghapus tugas ini?"
-        );
-
-
-    if (!confirmDelete) {
-
-        return;
-
-    }
-
-
-    tasks =
-        tasks.filter(
-            task =>
-                task.id !== id
-        );
-
-
-    saveTasksToStorage();
-
-    displayTasks();
-
-}
-
-
-// ============================================
-// FILTER
-// ============================================
-
-function filterTasks(filter) {
-
-    currentFilter =
-        filter;
-
-    displayTasks();
-
-}
-
-
-// ============================================
-// STATISTIK + PROGRESS
-// ============================================
+// ==================================================
+// STATISTIK
+// ==================================================
 
 function updateStats() {
 
@@ -886,12 +787,31 @@ function updateStats() {
 
 
     const pending =
-        total - completed;
+        tasks.filter(
+            task =>
+                !task.completed
+        ).length;
 
 
-    // ========================================
-    // STATISTIK
-    // ========================================
+    const late =
+        tasks.filter(
+            task => {
+
+                return (
+
+                    !task.completed
+
+                    &&
+
+                    getDeadline(task)
+                    <
+                    Date.now()
+
+                );
+
+            }
+        ).length;
+
 
     document.getElementById(
         "totalTask"
@@ -911,9 +831,13 @@ function updateStats() {
         pending;
 
 
-    // ========================================
-    // PROGRESS
-    // ========================================
+    document.getElementById(
+        "lateTask"
+    ).textContent =
+        late;
+
+
+    // Progress
 
     let percentage = 0;
 
@@ -949,18 +873,795 @@ function updateStats() {
 }
 
 
-// ============================================
-// UPDATE STATUS DEADLINE OTOMATIS
-// ============================================
+// ==================================================
+// EDIT
+// ==================================================
+
+function editTask(id) {
+
+    const task =
+        tasks.find(
+            task =>
+                task.id === id
+        );
+
+
+    if (!task) return;
+
+
+    document.getElementById(
+        "courseInput"
+    ).value =
+        task.course;
+
+
+    document.getElementById(
+        "taskInput"
+    ).value =
+        task.title;
+
+
+    document.getElementById(
+        "dateInput"
+    ).value =
+        task.date;
+
+
+    document.getElementById(
+        "timeInput"
+    ).value =
+        task.time;
+
+
+    document.getElementById(
+        "priorityInput"
+    ).value =
+        task.priority;
+
+
+    editTaskId =
+        id;
+
+
+    document.getElementById(
+        "formTitle"
+    ).textContent =
+        "✏️ Edit Tugas";
+
+
+    document.getElementById(
+        "saveButton"
+    ).textContent =
+        "💾 Simpan Perubahan";
+
+
+    document.getElementById(
+        "cancelButton"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "formTitle"
+    ).scrollIntoView({
+        behavior: "smooth"
+    });
+
+}
+
+
+// ==================================================
+// BATAL EDIT
+// ==================================================
+
+function cancelEdit() {
+
+    editTaskId = null;
+
+
+    document.getElementById(
+        "formTitle"
+    ).textContent =
+        "➕ Tambah Tugas";
+
+
+    document.getElementById(
+        "saveButton"
+    ).textContent =
+        "+ Tambah Tugas";
+
+
+    document.getElementById(
+        "cancelButton"
+    ).style.display =
+        "none";
+
+
+    clearForm();
+
+}
+
+
+// ==================================================
+// SELESAI
+// ==================================================
+
+function toggleTask(id) {
+
+    tasks =
+        tasks.map(
+            task => {
+
+                if (
+                    task.id === id
+                ) {
+
+                    return {
+
+                        ...task,
+
+                        completed:
+                            !task.completed
+
+                    };
+
+                }
+
+
+                return task;
+
+            }
+        );
+
+
+    saveData();
+
+    displayTasks();
+
+    renderCalendar();
+
+}
+
+
+// ==================================================
+// HAPUS
+// ==================================================
+
+function deleteTask(id) {
+
+    if (
+        !confirm(
+            "Yakin ingin menghapus tugas ini?"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    tasks =
+        tasks.filter(
+            task =>
+                task.id !== id
+        );
+
+
+    saveData();
+
+    displayTasks();
+
+    renderCalendar();
+
+}
+
+
+// ==================================================
+// FILTER
+// ==================================================
+
+function filterTasks(filter) {
+
+    currentFilter =
+        filter;
+
+    displayTasks();
+
+}
+
+
+// ==================================================
+// KALENDER
+// ==================================================
+
+function renderCalendar() {
+
+    const year =
+        calendarDate.getFullYear();
+
+
+    const month =
+        calendarDate.getMonth();
+
+
+    const monthNames = [
+
+        "Januari",
+
+        "Februari",
+
+        "Maret",
+
+        "April",
+
+        "Mei",
+
+        "Juni",
+
+        "Juli",
+
+        "Agustus",
+
+        "September",
+
+        "Oktober",
+
+        "November",
+
+        "Desember"
+
+    ];
+
+
+    document.getElementById(
+        "calendarTitle"
+    ).textContent =
+
+        `${monthNames[month]} ${year}`;
+
+
+    const firstDay =
+        new Date(
+            year,
+            month,
+            1
+        );
+
+
+    let startDay =
+        firstDay.getDay();
+
+
+    // Senin sebagai hari pertama
+
+    startDay =
+        startDay === 0
+        ? 6
+        : startDay - 1;
+
+
+    const daysInMonth =
+        new Date(
+            year,
+            month + 1,
+            0
+        ).getDate();
+
+
+    const calendar =
+        document.getElementById(
+            "calendarDays"
+        );
+
+
+    calendar.innerHTML = "";
+
+
+    // Hari kosong
+
+    for (
+        let i = 0;
+        i < startDay;
+        i++
+    ) {
+
+        const empty =
+            document.createElement(
+                "div"
+            );
+
+        empty.className =
+            "calendar-day";
+
+        calendar.appendChild(
+            empty
+        );
+
+    }
+
+
+    // Tanggal
+
+    for (
+        let day = 1;
+        day <= daysInMonth;
+        day++
+    ) {
+
+        const element =
+            document.createElement(
+                "div"
+            );
+
+
+        element.className =
+            "calendar-day";
+
+
+        const dateString =
+            `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+
+
+        const dateTasks =
+            tasks.filter(
+                task =>
+                    task.date === dateString
+            );
+
+
+        // Hari ini
+
+        const today =
+            new Date();
+
+
+        if (
+
+            day ===
+                today.getDate()
+
+            &&
+
+            month ===
+                today.getMonth()
+
+            &&
+
+            year ===
+                today.getFullYear()
+
+        ) {
+
+            element.classList.add(
+                "today"
+            );
+
+        }
+
+
+        if (
+            dateTasks.length > 0
+        ) {
+
+            element.classList.add(
+                "has-task"
+            );
+
+        }
+
+
+        element.innerHTML = `
+
+            ${day}
+
+            ${
+                dateTasks.length > 0
+                ? `<span class="task-dot"></span>`
+                : ""
+            }
+
+        `;
+
+
+        element.onclick =
+            function() {
+
+                showDateTasks(
+                    dateString
+                );
+
+            };
+
+
+        calendar.appendChild(
+            element
+        );
+
+    }
+
+}
+
+
+// ==================================================
+// KALENDER SEBELUMNYA
+// ==================================================
+
+function previousMonth() {
+
+    calendarDate.setMonth(
+        calendarDate.getMonth() - 1
+    );
+
+    renderCalendar();
+
+}
+
+
+// ==================================================
+// KALENDER BERIKUTNYA
+// ==================================================
+
+function nextMonth() {
+
+    calendarDate.setMonth(
+        calendarDate.getMonth() + 1
+    );
+
+    renderCalendar();
+
+}
+
+
+// ==================================================
+// TAMPILKAN TUGAS PADA TANGGAL
+// ==================================================
+
+function showDateTasks(date) {
+
+    const box =
+        document.getElementById(
+            "selectedDateTasks"
+        );
+
+
+    const dateTasks =
+        tasks.filter(
+            task =>
+                task.date === date
+        );
+
+
+    box.innerHTML = `
+
+        <h3>
+            📅 ${formatDate(date)}
+        </h3>
+
+    `;
+
+
+    if (
+        dateTasks.length === 0
+    ) {
+
+        box.innerHTML += `
+
+            <p>
+                Tidak ada tugas pada tanggal ini.
+            </p>
+
+        `;
+
+        return;
+
+    }
+
+
+    dateTasks.forEach(
+        task => {
+
+            box.innerHTML += `
+
+                <div class="calendar-task">
+
+                    <strong>
+                        📚 ${task.course}
+                    </strong>
+
+                    <br>
+
+                    ${task.title}
+
+                    <br>
+
+                    🕐 ${task.time} WIB
+
+                </div>
+
+            `;
+
+        }
+    );
+
+}
+
+
+// ==================================================
+// DARK MODE
+// ==================================================
+
+function toggleDarkMode() {
+
+    document.body.classList.toggle(
+        "dark"
+    );
+
+
+    const dark =
+        document.body.classList.contains(
+            "dark"
+        );
+
+
+    localStorage.setItem(
+        "darkMode",
+        dark
+    );
+
+
+    document.getElementById(
+        "darkButton"
+    ).textContent =
+        dark
+        ? "☀️"
+        : "🌙";
+
+}
+
+
+// ==================================================
+// LOAD DARK MODE
+// ==================================================
+
+function loadDarkMode() {
+
+    const dark =
+        localStorage.getItem(
+            "darkMode"
+        );
+
+
+    if (dark === "true") {
+
+        document.body.classList.add(
+            "dark"
+        );
+
+
+        document.getElementById(
+            "darkButton"
+        ).textContent =
+            "☀️";
+
+    }
+
+}
+
+
+// ==================================================
+// NOTIFIKASI DEADLINE
+// ==================================================
+
+function requestNotificationPermission() {
+
+    if (
+        "Notification" in window
+    ) {
+
+        Notification.requestPermission();
+
+    }
+
+}
+
+
+// ==================================================
+// CEK DEADLINE
+// ==================================================
+
+function checkNotifications() {
+
+    if (
+        !("Notification" in window)
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        Notification.permission !==
+        "granted"
+    ) {
+
+        return;
+
+    }
+
+
+    const today =
+        new Date();
+
+
+    tasks.forEach(
+        task => {
+
+            if (
+                task.completed
+            ) {
+
+                return;
+
+            }
+
+
+            const deadline =
+                new Date(
+                    `${task.date}T${task.time}`
+                );
+
+
+            const difference =
+                deadline - today;
+
+
+            const oneDay =
+                24 * 60 * 60 * 1000;
+
+
+            // Deadline kurang dari 24 jam
+
+            if (
+                difference > 0
+                &&
+                difference <= oneDay
+            ) {
+
+                const notificationKey =
+                    `notif-${task.id}-${task.date}-${task.time}`;
+
+
+                if (
+                    !localStorage.getItem(
+                        notificationKey
+                    )
+                ) {
+
+                    new Notification(
+                        "🔔 StudentTask",
+                        {
+
+                            body:
+                                `${task.title} - ${task.course} deadline kurang dari 24 jam.`
+
+                        }
+                    );
+
+
+                    localStorage.setItem(
+                        notificationKey,
+                        "true"
+                    );
+
+                }
+
+            }
+
+        }
+    );
+
+}
+
+
+// ==================================================
+// JALANKAN NOTIFIKASI
+// ==================================================
+
+function enableNotifications() {
+
+    if (
+        "Notification" in window
+    ) {
+
+        Notification.requestPermission()
+            .then(
+                permission => {
+
+                    if (
+                        permission ===
+                        "granted"
+                    ) {
+
+                        alert(
+                            "🔔 Notifikasi berhasil diaktifkan!"
+                        );
+
+                        checkNotifications();
+
+                    }
+
+                }
+            );
+
+    }
+
+}
+
+
+// ==================================================
+// AUTO REFRESH STATUS
+// ==================================================
 
 setInterval(
-    displayTasks,
+    function() {
+
+        displayTasks();
+
+        renderCalendar();
+
+        checkNotifications();
+
+    },
     60000
 );
 
 
-// ============================================
-// JALANKAN SAAT WEBSITE DIBUKA
-// ============================================
+// ==================================================
+// TAMBAHKAN TOMBOL NOTIFIKASI
+// ==================================================
+
+const header =
+    document.querySelector(
+        ".header-top"
+    );
+
+
+const notificationButton =
+    document.createElement(
+        "button"
+    );
+
+
+notificationButton.className =
+    "dark-button";
+
+
+notificationButton.textContent =
+    "🔔";
+
+
+notificationButton.title =
+    "Aktifkan notifikasi";
+
+
+notificationButton.onclick =
+    enableNotifications;
+
+
+header.appendChild(
+    notificationButton
+);
+
+
+// ==================================================
+// START
+// ==================================================
+
+loadDarkMode();
 
 displayTasks();
+
+renderCalendar();
+
+checkNotifications();

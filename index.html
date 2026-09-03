@@ -1,284 +1,3826 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+<title>StudentTask - To-Do List Mahasiswa</title>
 
-    <title>StudentTask - To-Do List Mahasiswa</title>
+<style>
 
-    <link rel="stylesheet" href="style.css">
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   BODY
+========================= */
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(
+        135deg,
+        #dbeafe,
+        #eff6ff,
+        #e0f2fe
+    );
+    color: #1e293b;
+    min-height: 100vh;
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #1d4ed8
+    );
+
+    color: white;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    margin-bottom: 22px;
+
+    box-shadow:
+        0 10px 30px rgba(37, 99, 235, 0.25);
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.subtitle {
+    margin-top: 7px;
+    opacity: 0.9;
+    font-size: 15px;
+}
+
+
+/* =========================
+   STATISTICS
+========================= */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background: white;
+    padding: 22px;
+    border-radius: 16px;
+    text-align: center;
+
+    border: 1px solid #dbeafe;
+
+    box-shadow:
+        0 5px 18px rgba(30, 64, 175, 0.10);
+
+    transition: 0.3s;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 10px 25px rgba(37, 99, 235, 0.18);
+}
+
+.stat-number {
+    font-size: 30px;
+    font-weight: bold;
+    color: #2563eb;
+}
+
+.stat-title {
+    margin-top: 5px;
+    color: #64748b;
+}
+
+
+/* =========================
+   OVERALL PROGRESS
+========================= */
+
+.progress-section {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+
+    box-shadow:
+        0 5px 18px rgba(30, 64, 175, 0.10);
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+
+    font-weight: bold;
+
+    margin-bottom: 10px;
+}
+
+.progress-bar,
+.task-progress-bar {
+    width: 100%;
+    height: 10px;
+
+    background: #dbeafe;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+.progress-fill,
+.task-progress-fill {
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        #2563eb,
+        #60a5fa
+    );
+
+    border-radius: 20px;
+
+    transition: 0.4s;
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+.search-box {
+    margin-bottom: 15px;
+}
+
+.search-box input {
+    width: 100%;
+
+    padding: 15px 18px;
+
+    border: 2px solid #bfdbfe;
+
+    border-radius: 12px;
+
+    outline: none;
+
+    font-size: 15px;
+
+    background: white;
+
+    transition: 0.3s;
+}
+
+.search-box input:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 4px rgba(37, 99, 235, 0.10);
+}
+
+
+/* =========================
+   FILTER
+========================= */
+
+.filters {
+    display: flex;
+
+    gap: 10px;
+
+    margin-bottom: 20px;
+
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    border: none;
+
+    background: white;
+
+    color: #2563eb;
+
+    padding: 10px 18px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    border: 1px solid #bfdbfe;
+
+    transition: 0.3s;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: #2563eb;
+
+    color: white;
+}
+
+
+/* =========================
+   CALENDAR
+========================= */
+
+.calendar-section {
+    background: white;
+
+    padding: 22px;
+
+    border-radius: 18px;
+
+    margin-bottom: 20px;
+
+    box-shadow:
+        0 5px 18px rgba(30, 64, 175, 0.10);
+}
+
+.calendar-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 18px;
+}
+
+.calendar-header h2 {
+    color: #1e40af;
+}
+
+.calendar-header button {
+    border: none;
+
+    background: #2563eb;
+
+    color: white;
+
+    width: 38px;
+    height: 38px;
+
+    border-radius: 10px;
+
+    font-size: 24px;
+
+    cursor: pointer;
+}
+
+.calendar-header button:hover {
+    background: #1d4ed8;
+}
+
+.calendar-week,
+.calendar-days {
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    gap: 8px;
+}
+
+.calendar-week div {
+    text-align: center;
+
+    font-weight: bold;
+
+    color: #2563eb;
+
+    padding: 8px;
+}
+
+.calendar-day {
+    min-height: 90px;
+
+    background: #f8fbff;
+
+    border: 1px solid #dbeafe;
+
+    border-radius: 10px;
+
+    padding: 8px;
+
+    transition: 0.2s;
+}
+
+.calendar-day:hover {
+    border-color: #60a5fa;
+}
+
+.calendar-day.today {
+    border: 2px solid #2563eb;
+
+    background: #eff6ff;
+}
+
+.calendar-day.empty {
+    background: transparent;
+
+    border: none;
+}
+
+.calendar-date {
+    font-weight: bold;
+
+    color: #334155;
+
+    margin-bottom: 5px;
+}
+
+.calendar-task {
+    background: #3b82f6;
+
+    color: white;
+
+    padding: 5px 6px;
+
+    border-radius: 6px;
+
+    font-size: 11px;
+
+    margin-top: 4px;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+.calendar-task:hover {
+    background: #1d4ed8;
+}
+
+.calendar-task.completed {
+    background: #16a34a;
+}
+
+.calendar-task.overdue {
+    background: #dc2626;
+}
+
+
+/* =========================
+   ADD TASK
+========================= */
+
+.add-task {
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 18px;
+
+    margin-bottom: 20px;
+
+    box-shadow:
+        0 5px 18px rgba(30, 64, 175, 0.10);
+}
+
+.add-title {
+    font-size: 22px;
+
+    font-weight: bold;
+
+    color: #1e40af;
+
+    margin-bottom: 20px;
+}
+
+.form-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+
+    flex-direction: column;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label,
+.modal-group label {
+    font-weight: bold;
+
+    margin-bottom: 7px;
+
+    color: #334155;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+
+    padding: 12px;
+
+    border: 1px solid #bfdbfe;
+
+    border-radius: 10px;
+
+    outline: none;
+
+    font-size: 14px;
+
+    background: #f8fbff;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #2563eb;
+
+    background: white;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+textarea {
+    min-height: 100px;
+
+    resize: vertical;
+}
+
+.file-name {
+    margin-top: 7px;
+
+    font-size: 13px;
+
+    color: #64748b;
+}
+
+
+/* =========================
+   ADD BUTTON
+========================= */
+
+.add-btn {
+    width: 100%;
+
+    margin-top: 20px;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #1d4ed8
+    );
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.add-btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(37, 99, 235, 0.30);
+}
+
+
+/* =========================
+   TASK LIST
+========================= */
+
+.task-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 16px;
+}
+
+
+/* =========================
+   TASK CARD
+========================= */
+
+.task-card {
+    background: white;
+
+    padding: 22px;
+
+    border-radius: 18px;
+
+    border-left: 5px solid #2563eb;
+
+    box-shadow:
+        0 5px 18px rgba(30, 64, 175, 0.10);
+
+    transition: 0.3s;
+}
+
+.task-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 25px rgba(30, 64, 175, 0.15);
+}
+
+.task-card.completed {
+    border-left-color: #16a34a;
+
+    opacity: 0.85;
+}
+
+.task-top {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 15px;
+}
+
+.task-name {
+    font-size: 19px;
+
+    font-weight: bold;
+
+    color: #1e293b;
+}
+
+.category-badge {
+    display: inline-block;
+
+    margin-top: 7px;
+
+    padding: 5px 10px;
+
+    background: #dbeafe;
+
+    color: #1d4ed8;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+
+/* =========================
+   PRIORITY
+========================= */
+
+.priority {
+    padding: 7px 12px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    white-space: nowrap;
+}
+
+.priority-high {
+    background: #fee2e2;
+
+    color: #dc2626;
+}
+
+.priority-medium {
+    background: #ffedd5;
+
+    color: #ea580c;
+}
+
+.priority-low {
+    background: #dcfce7;
+
+    color: #16a34a;
+}
+
+
+/* =========================
+   DEADLINE
+========================= */
+
+.deadline {
+    margin-top: 15px;
+
+    padding: 11px;
+
+    border-radius: 9px;
+
+    font-size: 14px;
+}
+
+.deadline.today {
+    background: #fee2e2;
+
+    color: #dc2626;
+}
+
+.deadline.tomorrow {
+    background: #ffedd5;
+
+    color: #ea580c;
+}
+
+.deadline.safe {
+    background: #dcfce7;
+
+    color: #15803d;
+}
+
+.deadline.overdue {
+    background: #fecaca;
+
+    color: #b91c1c;
+}
+
+
+/* =========================
+   TASK PROGRESS
+========================= */
+
+.task-progress {
+    margin-top: 16px;
+}
+
+.task-progress-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 7px;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   NOTES
+========================= */
+
+.task-note {
+    margin-top: 15px;
+
+    padding: 13px;
+
+    background: #eff6ff;
+
+    border-left: 4px solid #60a5fa;
+
+    border-radius: 8px;
+
+    color: #334155;
+
+    line-height: 1.5;
+}
+
+
+/* =========================
+   FILE
+========================= */
+
+.task-file {
+    margin-top: 15px;
+
+    padding: 13px;
+
+    background: #f8fbff;
+
+    border: 1px solid #dbeafe;
+
+    border-radius: 9px;
+}
+
+
+/* =========================
+   BUTTON ACTION
+========================= */
+
+.task-actions {
+    display: flex;
+
+    gap: 8px;
+
+    margin-top: 15px;
+
+    flex-wrap: wrap;
+}
+
+.task-actions button,
+.edit-file-buttons button {
+    border: none;
+
+    padding: 9px 13px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}
+
+.complete-btn {
+    background: #dcfce7;
+
+    color: #15803d;
+}
+
+.complete-btn:hover {
+    background: #bbf7d0;
+}
+
+.update-btn {
+    background: #dbeafe;
+
+    color: #1d4ed8;
+}
+
+.update-btn:hover {
+    background: #bfdbfe;
+}
+
+.delete-btn {
+    background: #fee2e2;
+
+    color: #dc2626;
+}
+
+.delete-btn:hover {
+    background: #fecaca;
+}
+
+.file-btn {
+    background: #2563eb;
+
+    color: white;
+}
+
+.file-btn:hover {
+    background: #1d4ed8;
+}
+
+.download-btn {
+    background: #0ea5e9;
+
+    color: white;
+}
+
+.download-btn:hover {
+    background: #0284c7;
+}
+
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.empty-state {
+    background: white;
+
+    padding: 50px;
+
+    text-align: center;
+
+    border-radius: 18px;
+
+    color: #64748b;
+}
+
+.empty-state .icon {
+    font-size: 50px;
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+.modal {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(15, 23, 42, 0.55);
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 20px;
+
+    z-index: 999;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+
+    width: 100%;
+
+    max-width: 600px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    padding: 25px;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 20px 50px rgba(15, 23, 42, 0.25);
+}
+
+.modal-title {
+    font-size: 22px;
+
+    font-weight: bold;
+
+    color: #1e40af;
+
+    margin-bottom: 20px;
+}
+
+.modal-group {
+    margin-bottom: 15px;
+}
+
+.progress-input {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+.progress-input input {
+    padding: 0;
+
+    accent-color: #2563eb;
+}
+
+.progress-number {
+    font-weight: bold;
+
+    color: #2563eb;
+
+    min-width: 45px;
+}
+
+.edit-file {
+    background: #eff6ff;
+
+    border: 1px solid #bfdbfe;
+
+    padding: 12px;
+
+    border-radius: 9px;
+}
+
+.edit-file-buttons {
+    display: flex;
+
+    gap: 8px;
+
+    margin-top: 10px;
+}
+
+.modal-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+.cancel-btn,
+.save-btn {
+    border: none;
+
+    padding: 11px 17px;
+
+    border-radius: 9px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}
+
+.cancel-btn {
+    background: #e2e8f0;
+
+    color: #334155;
+}
+
+.save-btn {
+    background: #2563eb;
+
+    color: white;
+}
+
+.save-btn:hover {
+    background: #1d4ed8;
+}
+
+
+/* =========================
+   RESPONSIVE TABLET
+========================= */
+
+@media (max-width: 768px) {
+
+    .stats {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full-width {
+        grid-column: auto;
+    }
+
+    .task-top {
+        flex-direction: column;
+    }
+
+    .calendar-day {
+        min-height: 70px;
+    }
+
+    .calendar-task {
+        font-size: 9px;
+    }
+
+    .container {
+        padding: 12px;
+    }
+}
+
+
+/* =========================
+   RESPONSIVE HP
+========================= */
+
+@media (max-width: 480px) {
+
+    .stats {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .calendar-week,
+    .calendar-days {
+        gap: 3px;
+    }
+
+    .calendar-day {
+        min-height: 60px;
+
+        padding: 5px;
+    }
+
+    .calendar-date {
+        font-size: 12px;
+    }
+
+    .logo {
+        font-size: 24px;
+    }
+
+    .task-actions button {
+        width: 100%;
+    }
+
+    .edit-file-buttons {
+        flex-direction: column;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+    }
+
+    .cancel-btn,
+    .save-btn {
+        width: 100%;
+    }
+}
+
+</style>
 </head>
+
 
 <body>
 
-    <div class="container">
-
-        <!-- ================= HEADER ================= -->
-
-        <header>
-
-            <h1>🎓 StudentTask</h1>
-
-            <p>
-                To-Do List Mahasiswa
-            </p>
-
-        </header>
+<div class="container">
 
 
-        <!-- ================= STATISTIK ================= -->
+<!-- =========================
+     HEADER
+========================= -->
 
-        <div class="stats">
+<header>
 
-            <div class="stat-box">
+    <div class="logo">
+        🎓 StudentTask
+    </div>
 
-                <h3 id="totalTask">0</h3>
+    <div class="subtitle">
+        To-Do List Mahasiswa
+    </div>
 
-                <p>Total Tugas</p>
-
-            </div>
-
-
-            <div class="stat-box">
-
-                <h3 id="completedTask">0</h3>
-
-                <p>Selesai</p>
-
-            </div>
+</header>
 
 
-            <div class="stat-box">
+<!-- =========================
+     STATISTICS
+========================= -->
 
-                <h3 id="pendingTask">0</h3>
+<section class="stats">
 
-                <p>Belum Selesai</p>
+    <div class="stat-card">
 
-            </div>
-
+        <div
+            class="stat-number"
+            id="totalTasks">
+            0
         </div>
 
-
-        <!-- ================= PROGRESS ================= -->
-
-        <div class="progress-card">
-
-            <div class="progress-header">
-
-                <span>📊 Progress Tugas</span>
-
-                <strong id="progressText">
-                    0%
-                </strong>
-
-            </div>
-
-
-            <div class="progress-bar">
-
-                <div
-                    id="progressFill"
-                    class="progress-fill">
-                </div>
-
-            </div>
-
-
-            <p id="progressDetail">
-                0 dari 0 tugas selesai
-            </p>
-
+        <div class="stat-title">
+            Total Tugas
         </div>
-
-
-        <!-- ================= FORM TUGAS ================= -->
-
-        <div class="input-section">
-
-            <h2 id="formTitle">
-                ➕ Tambah Tugas
-            </h2>
-
-
-            <!-- Mata Kuliah -->
-
-            <div class="input-group">
-
-                <label for="courseInput">
-                    📚 Mata Kuliah
-                </label>
-
-                <select id="courseInput">
-
-                    <option value="">
-                        Pilih Mata Kuliah
-                    </option>
-
-                    <option value="Pemrograman Web">
-                        Pemrograman Web
-                    </option>
-
-                    <option value="Basis Data">
-                        Basis Data
-                    </option>
-
-                    <option value="Pengolahan Citra Digital">
-                        Pengolahan Citra Digital
-                    </option>
-
-                    <option value="Pemrograman Berorientasi Objek">
-                        Pemrograman Berorientasi Objek
-                    </option>
-
-                    <option value="Jaringan Komputer">
-                        Jaringan Komputer
-                    </option>
-
-                    <option value="Rekayasa Perangkat Lunak">
-                        Rekayasa Perangkat Lunak
-                    </option>
-
-                    <option value="Kecerdasan Buatan">
-                        Kecerdasan Buatan
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <!-- Nama Tugas -->
-
-            <div class="input-group">
-
-                <label for="taskInput">
-                    📝 Nama Tugas
-                </label>
-
-                <input
-                    type="text"
-                    id="taskInput"
-                    placeholder="Contoh: Membuat halaman login">
-
-            </div>
-
-
-            <!-- Tanggal dan Jam -->
-
-            <div class="deadline-group">
-
-                <div class="input-group">
-
-                    <label for="dateInput">
-                        📅 Tanggal Deadline
-                    </label>
-
-                    <input
-                        type="date"
-                        id="dateInput">
-
-                </div>
-
-
-                <div class="input-group">
-
-                    <label for="timeInput">
-                        🕐 Jam Deadline
-                    </label>
-
-                    <input
-                        type="time"
-                        id="timeInput">
-
-                </div>
-
-            </div>
-
-
-            <!-- Tombol -->
-
-            <div class="form-buttons">
-
-                <button
-                    class="add-button"
-                    onclick="saveTask()"
-                    id="saveButton">
-
-                    + Tambah Tugas
-
-                </button>
-
-
-                <button
-                    class="cancel-button"
-                    onclick="cancelEdit()"
-                    id="cancelButton"
-                    style="display: none;">
-
-                    Batal
-
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <!-- ================= PENCARIAN ================= -->
-
-        <div class="search-section">
-
-            <input
-                type="text"
-                id="searchInput"
-                placeholder="🔎 Cari tugas atau mata kuliah..."
-                oninput="displayTasks()">
-
-        </div>
-
-
-        <!-- ================= FILTER ================= -->
-
-        <div class="filter-section">
-
-            <button
-                onclick="filterTasks('all')">
-
-                Semua
-
-            </button>
-
-
-            <button
-                onclick="filterTasks('pending')">
-
-                Belum Selesai
-
-            </button>
-
-
-            <button
-                onclick="filterTasks('completed')">
-
-                Selesai
-
-            </button>
-
-        </div>
-
-
-        <!-- ================= DAFTAR TUGAS ================= -->
-
-        <div id="taskList"></div>
 
     </div>
 
 
-    <script src="script.js"></script>
+    <div class="stat-card">
+
+        <div
+            class="stat-number"
+            id="completedTasks">
+            0
+        </div>
+
+        <div class="stat-title">
+            Selesai
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div
+            class="stat-number"
+            id="pendingTasks">
+            0
+        </div>
+
+        <div class="stat-title">
+            Belum Selesai
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div
+            class="stat-number"
+            id="lateTasks">
+            0
+        </div>
+
+        <div class="stat-title">
+            Terlambat
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     OVERALL PROGRESS
+========================= -->
+
+<section class="progress-section">
+
+    <div class="progress-header">
+
+        <span>
+            Progress Keseluruhan
+        </span>
+
+        <span id="overallProgress">
+            0%
+        </span>
+
+    </div>
+
+    <div class="progress-bar">
+
+        <div
+            class="progress-fill"
+            id="overallProgressBar"
+            style="width:0%">
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     SEARCH
+========================= -->
+
+<div class="search-box">
+
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="🔍 Cari tugas atau mata kuliah..."
+        oninput="renderTasks()">
+
+</div>
+
+
+<!-- =========================
+     FILTER
+========================= -->
+
+<div class="filters">
+
+    <button
+        class="filter-btn active"
+        id="filterAll"
+        onclick="setFilter('all')">
+
+        Semua
+
+    </button>
+
+
+    <button
+        class="filter-btn"
+        id="filterPending"
+        onclick="setFilter('pending')">
+
+        Belum Selesai
+
+    </button>
+
+
+    <button
+        class="filter-btn"
+        id="filterCompleted"
+        onclick="setFilter('completed')">
+
+        Selesai
+
+    </button>
+
+</div>
+
+
+<!-- =========================
+     CALENDAR
+========================= -->
+
+<section class="calendar-section">
+
+    <div class="calendar-header">
+
+        <button onclick="changeMonth(-1)">
+            ‹
+        </button>
+
+        <h2 id="calendarTitle">
+            September 2026
+        </h2>
+
+        <button onclick="changeMonth(1)">
+            ›
+        </button>
+
+    </div>
+
+
+    <div class="calendar-week">
+
+        <div>Min</div>
+        <div>Sen</div>
+        <div>Sel</div>
+        <div>Rab</div>
+        <div>Kam</div>
+        <div>Jum</div>
+        <div>Sab</div>
+
+    </div>
+
+
+    <div
+        id="calendarDays"
+        class="calendar-days">
+    </div>
+
+</section>
+
+
+<!-- =========================
+     ADD TASK
+========================= -->
+
+<section class="add-task">
+
+    <div class="add-title">
+        ➕ Tambah Tugas
+    </div>
+
+
+    <div class="form-grid">
+
+
+        <!-- MATA KULIAH -->
+
+        <div class="form-group">
+
+            <label>
+                Mata Kuliah
+            </label>
+
+            <select id="category">
+
+                <option value="">
+                    Pilih Mata Kuliah
+                </option>
+
+                <option>
+                    Pengolahan Citra Digital
+                </option>
+
+                <option>
+                    Pemrograman Web
+                </option>
+
+                <option>
+                    Basis Data
+                </option>
+
+                <option>
+                    Pemrograman Berorientasi Objek
+                </option>
+
+                <option>
+                    Rekayasa Perangkat Lunak
+                </option>
+
+                <option>
+                    Kecerdasan Buatan
+                </option>
+
+                <option>
+                    Jaringan Komputer
+                </option>
+
+                <option>
+                    Internet of Things
+                </option>
+
+                <option>
+                    Sistem Operasi
+                </option>
+
+                <option>
+                    Metode Numerik
+                </option>
+
+                <option>
+                    Lainnya
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- NAMA TUGAS -->
+
+        <div class="form-group">
+
+            <label>
+                Nama Tugas
+            </label>
+
+            <input
+                type="text"
+                id="taskName"
+                placeholder="Masukkan nama tugas">
+
+        </div>
+
+
+        <!-- TANGGAL -->
+
+        <div class="form-group">
+
+            <label>
+                Tanggal Deadline
+            </label>
+
+            <input
+                type="date"
+                id="taskDate">
+
+        </div>
+
+
+        <!-- JAM -->
+
+        <div class="form-group">
+
+            <label>
+                Jam Deadline
+            </label>
+
+            <input
+                type="time"
+                id="taskTime"
+                value="23:59">
+
+        </div>
+
+
+        <!-- FILE -->
+
+        <div class="form-group file-area">
+
+            <label>
+                📎 Upload File Tugas
+            </label>
+
+            <input
+                type="file"
+                id="taskFile"
+                accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.zip,.rar,.jpg,.jpeg,.png">
+
+            <div
+                class="file-name"
+                id="fileName">
+
+                Belum ada file dipilih
+
+            </div>
+
+        </div>
+
+
+        <!-- CATATAN -->
+
+        <div class="form-group full-width">
+
+            <label>
+                📝 Catatan Tugas
+            </label>
+
+            <textarea
+                id="taskNote"
+                placeholder="Contoh: Kerjakan BAB 1-3, kumpulkan dalam bentuk PDF, jangan lupa upload ke Google Classroom..."></textarea>
+
+        </div>
+
+    </div>
+
+
+    <button
+        class="add-btn"
+        onclick="addTask()">
+
+        ➕ Tambah Tugas
+
+    </button>
+
+</section>
+
+
+<!-- =========================
+     TASK LIST
+========================= -->
+
+<section
+    id="taskList"
+    class="task-list">
+
+</section>
+
+
+</div>
+
+
+<!-- =========================
+     EDIT MODAL
+========================= -->
+
+<div
+    class="modal"
+    id="editModal">
+
+
+    <div class="modal-content">
+
+
+        <div class="modal-title">
+            ✏️ Update Tugas
+        </div>
+
+
+        <!-- EDIT CATEGORY -->
+
+        <div class="modal-group">
+
+            <label>
+                Mata Kuliah
+            </label>
+
+            <select id="editCategory">
+
+                <option value="">
+                    Pilih Mata Kuliah
+                </option>
+
+                <option>
+                    Pengolahan Citra Digital
+                </option>
+
+                <option>
+                    Pemrograman Web
+                </option>
+
+                <option>
+                    Basis Data
+                </option>
+
+                <option>
+                    Pemrograman Berorientasi Objek
+                </option>
+
+                <option>
+                    Rekayasa Perangkat Lunak
+                </option>
+
+                <option>
+                    Kecerdasan Buatan
+                </option>
+
+                <option>
+                    Jaringan Komputer
+                </option>
+
+                <option>
+                    Internet of Things
+                </option>
+
+                <option>
+                    Sistem Operasi
+                </option>
+
+                <option>
+                    Metode Numerik
+                </option>
+
+                <option>
+                    Lainnya
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- EDIT NAME -->
+
+        <div class="modal-group">
+
+            <label>
+                Nama Tugas
+            </label>
+
+            <input
+                type="text"
+                id="editName">
+
+        </div>
+
+
+        <!-- EDIT DATE -->
+
+        <div class="modal-group">
+
+            <label>
+                Tanggal Deadline
+            </label>
+
+            <input
+                type="date"
+                id="editDate">
+
+        </div>
+
+
+        <!-- EDIT TIME -->
+
+        <div class="modal-group">
+
+            <label>
+                Jam Deadline
+            </label>
+
+            <input
+                type="time"
+                id="editTime">
+
+        </div>
+
+
+        <!-- EDIT PROGRESS -->
+
+        <div class="modal-group">
+
+            <label>
+                Progress Tugas
+            </label>
+
+            <div class="progress-input">
+
+                <input
+                    type="range"
+                    id="editProgress"
+                    min="0"
+                    max="100"
+                    value="0"
+                    oninput="updateEditProgress()">
+
+                <span
+                    class="progress-number"
+                    id="editProgressValue">
+
+                    0%
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- EDIT NOTE -->
+
+        <div class="modal-group">
+
+            <label>
+                📝 Catatan Tugas
+            </label>
+
+            <textarea
+                id="editNote"
+                placeholder="Tambahkan atau ubah catatan tugas..."></textarea>
+
+        </div>
+
+
+        <!-- EDIT FILE -->
+
+        <div
+            class="modal-group"
+            id="editFileArea">
+
+        </div>
+
+
+        <!-- MODAL BUTTON -->
+
+        <div class="modal-actions">
+
+            <button
+                class="cancel-btn"
+                onclick="closeEdit()">
+
+                Batal
+
+            </button>
+
+
+            <button
+                class="save-btn"
+                onclick="saveEdit()">
+
+                💾 Simpan Perubahan
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   DATA
+========================= */
+
+let tasks =
+    JSON.parse(
+        localStorage.getItem("studentTasks")
+    ) || [];
+
+
+let currentFilter = "all";
+
+let editingId = null;
+
+let calendarDate = new Date();
+
+
+/* =========================
+   SAVE
+========================= */
+
+function saveTasks() {
+
+    localStorage.setItem(
+        "studentTasks",
+        JSON.stringify(tasks)
+    );
+
+}
+
+
+/* =========================
+   FORMAT DATE
+========================= */
+
+function formatDate(dateString) {
+
+    if (!dateString) {
+        return "-";
+    }
+
+    const date =
+        new Date(
+            dateString + "T00:00:00"
+        );
+
+    return date.toLocaleDateString(
+        "id-ID",
+        {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+/* =========================
+   DEADLINE STATUS
+========================= */
+
+function getDeadlineStatus(task) {
+
+    const now = new Date();
+
+    const deadline =
+        new Date(
+            `${task.date}T${task.time}`
+        );
+
+
+    if (
+        deadline < now &&
+        !task.completed
+    ) {
+
+        return {
+            text: "Terlambat",
+            className: "overdue"
+        };
+
+    }
+
+
+    const today = new Date();
+
+    today.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+
+    const tomorrow =
+        new Date(today);
+
+    tomorrow.setDate(
+        tomorrow.getDate() + 1
+    );
+
+
+    const taskDate =
+        new Date(
+            `${task.date}T00:00:00`
+        );
+
+    taskDate.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+
+    if (
+        taskDate.getTime() ===
+        today.getTime()
+    ) {
+
+        return {
+            text: "Hari Ini",
+            className: "today"
+        };
+
+    }
+
+
+    if (
+        taskDate.getTime() ===
+        tomorrow.getTime()
+    ) {
+
+        return {
+            text: "Besok",
+            className: "tomorrow"
+        };
+
+    }
+
+
+    return {
+        text: "Aman",
+        className: "safe"
+    };
+
+}
+
+
+/* =========================
+   PRIORITY
+========================= */
+
+function getPriority(task) {
+
+    if (task.completed) {
+
+        return {
+            text: "Selesai",
+            className: "priority-low"
+        };
+
+    }
+
+
+    const now = new Date();
+
+    const deadline =
+        new Date(
+            `${task.date}T${task.time}`
+        );
+
+
+    const hours =
+        (deadline - now) /
+        (1000 * 60 * 60);
+
+
+    if (hours < 0) {
+
+        return {
+            text: "Terlambat",
+            className: "priority-high"
+        };
+
+    }
+
+
+    if (hours <= 24) {
+
+        return {
+            text: "Prioritas Tinggi",
+            className: "priority-high"
+        };
+
+    }
+
+
+    if (hours <= 72) {
+
+        return {
+            text: "Prioritas Sedang",
+            className: "priority-medium"
+        };
+
+    }
+
+
+    return {
+        text: "Prioritas Rendah",
+        className: "priority-low"
+    };
+
+}
+
+
+/* =========================
+   FILE NAME
+========================= */
+
+document
+    .getElementById("taskFile")
+    .addEventListener(
+        "change",
+        function() {
+
+            const file =
+                this.files[0];
+
+            document
+                .getElementById("fileName")
+                .textContent =
+                file
+                    ? file.name
+                    : "Belum ada file dipilih";
+
+        }
+    );
+
+
+/* =========================
+   FILE TO BASE64
+========================= */
+
+function convertFileToBase64(file) {
+
+    return new Promise(
+        (resolve, reject) => {
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                () => resolve(
+                    reader.result
+                );
+
+
+            reader.onerror =
+                error => reject(
+                    error
+                );
+
+
+            reader.readAsDataURL(file);
+
+        }
+    );
+
+}
+
+
+/* =========================
+   ADD TASK
+========================= */
+
+async function addTask() {
+
+    const category =
+        document
+            .getElementById("category")
+            .value
+            .trim();
+
+
+    const name =
+        document
+            .getElementById("taskName")
+            .value
+            .trim();
+
+
+    const date =
+        document
+            .getElementById("taskDate")
+            .value;
+
+
+    const time =
+        document
+            .getElementById("taskTime")
+            .value;
+
+
+    const note =
+        document
+            .getElementById("taskNote")
+            .value
+            .trim();
+
+
+    const fileInput =
+        document
+            .getElementById("taskFile");
+
+
+    const file =
+        fileInput.files[0];
+
+
+    if (!category) {
+
+        alert(
+            "Silakan pilih mata kuliah."
+        );
+
+        return;
+
+    }
+
+
+    if (!name) {
+
+        alert(
+            "Silakan masukkan nama tugas."
+        );
+
+        return;
+
+    }
+
+
+    if (!date) {
+
+        alert(
+            "Silakan pilih tanggal deadline."
+        );
+
+        return;
+
+    }
+
+
+    if (!time) {
+
+        alert(
+            "Silakan pilih jam deadline."
+        );
+
+        return;
+
+    }
+
+
+    let fileData = "";
+
+    let fileName = "";
+
+    let fileType = "";
+
+
+    if (file) {
+
+        try {
+
+            fileData =
+                await convertFileToBase64(
+                    file
+                );
+
+            fileName =
+                file.name;
+
+            fileType =
+                file.type;
+
+        }
+
+        catch (error) {
+
+            alert(
+                "File gagal diproses."
+            );
+
+            return;
+
+        }
+
+    }
+
+
+    const task = {
+
+        id: Date.now(),
+
+        name,
+
+        category,
+
+        date,
+
+        time,
+
+        progress: 0,
+
+        completed: false,
+
+        note,
+
+        fileName,
+
+        fileData,
+
+        fileType
+
+    };
+
+
+    tasks.push(task);
+
+    saveTasks();
+
+    clearAddForm();
+
+    renderTasks();
+
+    renderCalendar();
+
+    updateStats();
+
+
+    alert(
+        "Tugas berhasil ditambahkan!"
+    );
+
+}
+
+
+/* =========================
+   CLEAR FORM
+========================= */
+
+function clearAddForm() {
+
+    document
+        .getElementById("category")
+        .value = "";
+
+
+    document
+        .getElementById("taskName")
+        .value = "";
+
+
+    document
+        .getElementById("taskDate")
+        .value = "";
+
+
+    document
+        .getElementById("taskTime")
+        .value = "23:59";
+
+
+    document
+        .getElementById("taskNote")
+        .value = "";
+
+
+    document
+        .getElementById("taskFile")
+        .value = "";
+
+
+    document
+        .getElementById("fileName")
+        .textContent =
+        "Belum ada file dipilih";
+
+}
+
+
+/* =========================
+   RENDER TASKS
+========================= */
+
+function renderTasks() {
+
+    const list =
+        document.getElementById(
+            "taskList"
+        );
+
+
+    const search =
+        document
+            .getElementById(
+                "searchInput"
+            )
+            .value
+            .toLowerCase()
+            .trim();
+
+
+    let filteredTasks =
+        tasks.filter(task => {
+
+            const matchSearch =
+
+                task.name
+                    .toLowerCase()
+                    .includes(search)
+
+                ||
+
+                task.category
+                    .toLowerCase()
+                    .includes(search);
+
+
+            let matchFilter = true;
+
+
+            if (
+                currentFilter ===
+                "pending"
+            ) {
+
+                matchFilter =
+                    !task.completed;
+
+            }
+
+
+            if (
+                currentFilter ===
+                "completed"
+            ) {
+
+                matchFilter =
+                    task.completed;
+
+            }
+
+
+            return (
+                matchSearch &&
+                matchFilter
+            );
+
+        });
+
+
+    filteredTasks.sort(
+        (a, b) => {
+
+            const dateA =
+                new Date(
+                    `${a.date}T${a.time}`
+                );
+
+
+            const dateB =
+                new Date(
+                    `${b.date}T${b.time}`
+                );
+
+
+            return dateA - dateB;
+
+        }
+    );
+
+
+    if (
+        filteredTasks.length === 0
+    ) {
+
+        list.innerHTML = `
+
+            <div class="empty-state">
+
+                <div class="icon">
+                    📭
+                </div>
+
+                <h3>
+                    Belum ada tugas
+                </h3>
+
+                <p style="margin-top:8px;">
+                    Tambahkan tugas pertama kamu.
+                </p>
+
+            </div>
+
+        `;
+
+
+        updateStats();
+
+        renderCalendar();
+
+        return;
+
+    }
+
+
+    list.innerHTML =
+        filteredTasks
+            .map(
+                task =>
+                    createTaskHTML(task)
+            )
+            .join("");
+
+
+    updateStats();
+
+    renderCalendar();
+
+}
+
+
+/* =========================
+   CREATE TASK HTML
+========================= */
+
+function createTaskHTML(task) {
+
+    const deadline =
+        getDeadlineStatus(task);
+
+
+    const priority =
+        getPriority(task);
+
+
+    let fileHTML = "";
+
+
+    if (task.fileData) {
+
+        fileHTML = `
+
+            <div class="task-file">
+
+                📎
+
+                <strong>
+                    ${escapeHTML(
+                        task.fileName
+                    )}
+                </strong>
+
+                <div class="task-actions">
+
+                    <button
+                        class="file-btn"
+                        onclick="openFile(${task.id})">
+
+                        📂 Buka File
+
+                    </button>
+
+
+                    <button
+                        class="download-btn"
+                        onclick="downloadFile(${task.id})">
+
+                        📥 Download
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+    else if (task.fileName) {
+
+        fileHTML = `
+
+            <div class="task-file">
+
+                📎
+
+                ${escapeHTML(
+                    task.fileName
+                )}
+
+                <br>
+
+                <small>
+                    File lama belum tersedia untuk dibuka.
+                </small>
+
+            </div>
+
+        `;
+
+    }
+
+
+    let noteHTML = "";
+
+
+    if (task.note) {
+
+        noteHTML = `
+
+            <div class="task-note">
+
+                <strong>
+                    📝 Catatan:
+                </strong>
+
+                <br>
+
+                ${escapeHTML(
+                    task.note
+                )}
+
+            </div>
+
+        `;
+
+    }
+
+
+    return `
+
+        <div class="task-card ${
+            task.completed
+                ? "completed"
+                : ""
+        }">
+
+
+            <div class="task-top">
+
+                <div>
+
+                    <div class="task-name">
+
+                        ${escapeHTML(
+                            task.name
+                        )}
+
+                    </div>
+
+
+                    <span class="category-badge">
+
+                        ${escapeHTML(
+                            task.category
+                        )}
+
+                    </span>
+
+                </div>
+
+
+                <span class="priority ${
+                    priority.className
+                }">
+
+                    ${priority.text}
+
+                </span>
+
+            </div>
+
+
+            <div class="deadline ${
+                deadline.className
+            }">
+
+                📅
+
+                <strong>
+                    Deadline:
+                </strong>
+
+                ${formatDate(
+                    task.date
+                )}
+
+                &nbsp; • &nbsp;
+
+                ⏰
+
+                ${escapeHTML(
+                    task.time
+                )}
+
+                &nbsp; — &nbsp;
+
+                ${deadline.text}
+
+            </div>
+
+
+            <div class="task-progress">
+
+                <div class="task-progress-header">
+
+                    <span>
+                        Progress Tugas
+                    </span>
+
+                    <strong>
+                        ${task.progress}%
+                    </strong>
+
+                </div>
+
+
+                <div class="task-progress-bar">
+
+                    <div
+                        class="task-progress-fill"
+                        style="width:${task.progress}%">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            ${noteHTML}
+
+            ${fileHTML}
+
+
+            <div class="task-actions">
+
+
+                <button
+                    class="complete-btn"
+                    onclick="toggleComplete(${task.id})">
+
+                    ${
+                        task.completed
+                            ? "↩️ Buka Kembali"
+                            : "✅ Tandai Selesai"
+                    }
+
+                </button>
+
+
+                <button
+                    class="update-btn"
+                    onclick="openEdit(${task.id})">
+
+                    ✏️ Update
+
+                </button>
+
+
+                <button
+                    class="delete-btn"
+                    onclick="deleteTask(${task.id})">
+
+                    🗑️ Hapus
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================
+   OPEN FILE
+========================= */
+
+function openFile(id) {
+
+    const task =
+        tasks.find(
+            task =>
+                task.id === id
+        );
+
+
+    if (
+        !task ||
+        !task.fileData
+    ) {
+
+        alert(
+            "File tidak tersedia."
+        );
+
+        return;
+
+    }
+
+
+    const fileWindow =
+        window.open(
+            "",
+            "_blank"
+        );
+
+
+    if (!fileWindow) {
+
+        alert(
+            "Browser memblokir jendela baru. Izinkan pop-up untuk membuka file."
+        );
+
+        return;
+
+    }
+
+
+    const imageTypes = [
+
+        "image/jpeg",
+
+        "image/png",
+
+        "image/jpg"
+
+    ];
+
+
+    if (
+        imageTypes.includes(
+            task.fileType
+        )
+    ) {
+
+        fileWindow.document.write(`
+
+            <html>
+
+            <head>
+
+                <title>
+                    ${escapeHTML(
+                        task.fileName
+                    )}
+                </title>
+
+            </head>
+
+            <body
+                style="
+                    margin:0;
+                    display:flex;
+                    justify-content:center;
+                    align-items:center;
+                    background:#222;
+                    min-height:100vh;
+                ">
+
+                <img
+                    src="${task.fileData}"
+                    style="
+                        max-width:95%;
+                        max-height:95vh;
+                        object-fit:contain;
+                    ">
+
+            </body>
+
+            </html>
+
+        `);
+
+    }
+
+
+    else if (
+        task.fileType ===
+        "application/pdf"
+    ) {
+
+        fileWindow.document.write(`
+
+            <html>
+
+            <head>
+
+                <title>
+                    ${escapeHTML(
+                        task.fileName
+                    )}
+                </title>
+
+            </head>
+
+            <body
+                style="
+                    margin:0;
+                ">
+
+                <iframe
+                    src="${task.fileData}"
+                    style="
+                        width:100%;
+                        height:100vh;
+                        border:none;
+                    ">
+                </iframe>
+
+            </body>
+
+            </html>
+
+        `);
+
+    }
+
+
+    else {
+
+        fileWindow.document.write(`
+
+            <html>
+
+            <body
+                style="
+                    font-family:Arial;
+                    padding:40px;
+                    text-align:center;
+                ">
+
+                <h2>
+                    📎
+                    ${escapeHTML(
+                        task.fileName
+                    )}
+                </h2>
+
+                <p>
+                    File ini tidak dapat ditampilkan langsung di browser.
+                </p>
+
+                <br>
+
+                <a
+                    href="${task.fileData}"
+                    download="${escapeHTML(
+                        task.fileName
+                    )}"
+                    style="
+                        display:inline-block;
+                        padding:12px 20px;
+                        background:#2563eb;
+                        color:white;
+                        text-decoration:none;
+                        border-radius:8px;
+                    ">
+
+                    📥 Download File
+
+                </a>
+
+            </body>
+
+            </html>
+
+        `);
+
+    }
+
+
+    fileWindow.document.close();
+
+}
+
+
+/* =========================
+   DOWNLOAD FILE
+========================= */
+
+function downloadFile(id) {
+
+    const task =
+        tasks.find(
+            task =>
+                task.id === id
+        );
+
+
+    if (
+        !task ||
+        !task.fileData
+    ) {
+
+        alert(
+            "File tidak tersedia."
+        );
+
+        return;
+
+    }
+
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+
+    link.href =
+        task.fileData;
+
+
+    link.download =
+        task.fileName ||
+        "file-tugas";
+
+
+    document.body.appendChild(
+        link
+    );
+
+
+    link.click();
+
+
+    document.body.removeChild(
+        link
+    );
+
+}
+
+
+/* =========================
+   TOGGLE COMPLETE
+========================= */
+
+function toggleComplete(id) {
+
+    const task =
+        tasks.find(
+            task =>
+                task.id === id
+        );
+
+
+    if (!task) {
+        return;
+    }
+
+
+    if (!task.completed) {
+
+        task.completed = true;
+
+        task.progress = 100;
+
+    }
+
+    else {
+
+        task.completed = false;
+
+        task.progress = 0;
+
+    }
+
+
+    saveTasks();
+
+    renderTasks();
+
+}
+
+
+/* =========================
+   OPEN EDIT
+========================= */
+
+function openEdit(id) {
+
+    const task =
+        tasks.find(
+            task =>
+                task.id === id
+        );
+
+
+    if (!task) {
+        return;
+    }
+
+
+    editingId = id;
+
+
+    document
+        .getElementById(
+            "editCategory"
+        )
+        .value =
+        task.category;
+
+
+    document
+        .getElementById(
+            "editName"
+        )
+        .value =
+        task.name;
+
+
+    document
+        .getElementById(
+            "editDate"
+        )
+        .value =
+        task.date;
+
+
+    document
+        .getElementById(
+            "editTime"
+        )
+        .value =
+        task.time;
+
+
+    document
+        .getElementById(
+            "editProgress"
+        )
+        .value =
+        task.progress;
+
+
+    document
+        .getElementById(
+            "editProgressValue"
+        )
+        .textContent =
+        `${task.progress}%`;
+
+
+    document
+        .getElementById(
+            "editNote"
+        )
+        .value =
+        task.note || "";
+
+
+    const fileArea =
+        document.getElementById(
+            "editFileArea"
+        );
+
+
+    if (task.fileData) {
+
+        fileArea.innerHTML = `
+
+            <label>
+                📎 File Tugas
+            </label>
+
+            <div class="edit-file">
+
+                <strong>
+                    ${escapeHTML(
+                        task.fileName
+                    )}
+                </strong>
+
+                <div class="edit-file-buttons">
+
+                    <button
+                        class="file-btn"
+                        onclick="openFile(${task.id})">
+
+                        📂 Buka File
+
+                    </button>
+
+
+                    <button
+                        class="download-btn"
+                        onclick="downloadFile(${task.id})">
+
+                        📥 Download
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+    else {
+
+        fileArea.innerHTML = `
+
+            <label>
+                📎 File Tugas
+            </label>
+
+            <div class="edit-file">
+
+                Tidak ada file yang diupload.
+
+            </div>
+
+        `;
+
+    }
+
+
+    document
+        .getElementById(
+            "editModal"
+        )
+        .classList
+        .add("show");
+
+}
+
+
+/* =========================
+   UPDATE PROGRESS
+========================= */
+
+function updateEditProgress() {
+
+    const value =
+        document
+            .getElementById(
+                "editProgress"
+            )
+            .value;
+
+
+    document
+        .getElementById(
+            "editProgressValue"
+        )
+        .textContent =
+        `${value}%`;
+
+}
+
+
+/* =========================
+   SAVE EDIT
+========================= */
+
+function saveEdit() {
+
+    const task =
+        tasks.find(
+            task =>
+                task.id === editingId
+        );
+
+
+    if (!task) {
+        return;
+    }
+
+
+    const category =
+        document
+            .getElementById(
+                "editCategory"
+            )
+            .value
+            .trim();
+
+
+    const name =
+        document
+            .getElementById(
+                "editName"
+            )
+            .value
+            .trim();
+
+
+    const date =
+        document
+            .getElementById(
+                "editDate"
+            )
+            .value;
+
+
+    const time =
+        document
+            .getElementById(
+                "editTime"
+            )
+            .value;
+
+
+    const progress =
+        Number(
+            document
+                .getElementById(
+                    "editProgress"
+                )
+                .value
+        );
+
+
+    const note =
+        document
+            .getElementById(
+                "editNote"
+            )
+            .value
+            .trim();
+
+
+    if (!category) {
+
+        alert(
+            "Mata kuliah harus dipilih."
+        );
+
+        return;
+
+    }
+
+
+    if (!name) {
+
+        alert(
+            "Nama tugas tidak boleh kosong."
+        );
+
+        return;
+
+    }
+
+
+    if (!date) {
+
+        alert(
+            "Tanggal deadline harus diisi."
+        );
+
+        return;
+
+    }
+
+
+    if (!time) {
+
+        alert(
+            "Jam deadline harus diisi."
+        );
+
+        return;
+
+    }
+
+
+    task.category =
+        category;
+
+
+    task.name =
+        name;
+
+
+    task.date =
+        date;
+
+
+    task.time =
+        time;
+
+
+    task.progress =
+        progress;
+
+
+    task.note =
+        note;
+
+
+    if (progress >= 100) {
+
+        task.progress = 100;
+
+        task.completed = true;
+
+    }
+
+    else {
+
+        task.completed = false;
+
+    }
+
+
+    saveTasks();
+
+    closeEdit();
+
+    renderTasks();
+
+    renderCalendar();
+
+}
+
+
+/* =========================
+   CLOSE EDIT
+========================= */
+
+function closeEdit() {
+
+    editingId = null;
+
+
+    document
+        .getElementById(
+            "editModal"
+        )
+        .classList
+        .remove("show");
+
+}
+
+
+/* =========================
+   DELETE TASK
+========================= */
+
+function deleteTask(id) {
+
+    const task =
+        tasks.find(
+            task =>
+                task.id === id
+        );
+
+
+    if (!task) {
+        return;
+    }
+
+
+    const confirmDelete =
+        confirm(
+            `Hapus tugas "${task.name}"?`
+        );
+
+
+    if (!confirmDelete) {
+        return;
+    }
+
+
+    tasks =
+        tasks.filter(
+            task =>
+                task.id !== id
+        );
+
+
+    saveTasks();
+
+    renderTasks();
+
+    renderCalendar();
+
+}
+
+
+/* =========================
+   FILTER
+========================= */
+
+function setFilter(filter) {
+
+    currentFilter =
+        filter;
+
+
+    document
+        .getElementById(
+            "filterAll"
+        )
+        .classList
+        .remove("active");
+
+
+    document
+        .getElementById(
+            "filterPending"
+        )
+        .classList
+        .remove("active");
+
+
+    document
+        .getElementById(
+            "filterCompleted"
+        )
+        .classList
+        .remove("active");
+
+
+    if (
+        filter === "all"
+    ) {
+
+        document
+            .getElementById(
+                "filterAll"
+            )
+            .classList
+            .add("active");
+
+    }
+
+
+    if (
+        filter === "pending"
+    ) {
+
+        document
+            .getElementById(
+                "filterPending"
+            )
+            .classList
+            .add("active");
+
+    }
+
+
+    if (
+        filter === "completed"
+    ) {
+
+        document
+            .getElementById(
+                "filterCompleted"
+            )
+            .classList
+            .add("active");
+
+    }
+
+
+    renderTasks();
+
+}
+
+
+/* =========================
+   UPDATE STATISTICS
+========================= */
+
+function updateStats() {
+
+    const total =
+        tasks.length;
+
+
+    const completed =
+        tasks.filter(
+            task =>
+                task.completed
+        ).length;
+
+
+    const pending =
+        tasks.filter(
+            task =>
+                !task.completed
+        ).length;
+
+
+    const now =
+        new Date();
+
+
+    const late =
+        tasks.filter(
+            task => {
+
+                if (
+                    task.completed
+                ) {
+                    return false;
+                }
+
+
+                const deadline =
+                    new Date(
+                        `${task.date}T${task.time}`
+                    );
+
+
+                return deadline < now;
+
+            }
+        ).length;
+
+
+    document
+        .getElementById(
+            "totalTasks"
+        )
+        .textContent =
+        total;
+
+
+    document
+        .getElementById(
+            "completedTasks"
+        )
+        .textContent =
+        completed;
+
+
+    document
+        .getElementById(
+            "pendingTasks"
+        )
+        .textContent =
+        pending;
+
+
+    document
+        .getElementById(
+            "lateTasks"
+        )
+        .textContent =
+        late;
+
+
+    let progress = 0;
+
+
+    if (total > 0) {
+
+        progress =
+            Math.round(
+
+                tasks.reduce(
+                    (
+                        sum,
+                        task
+                    ) =>
+                        sum +
+                        Number(
+                            task.progress || 0
+                        ),
+                    0
+                )
+                /
+                total
+
+            );
+
+    }
+
+
+    document
+        .getElementById(
+            "overallProgress"
+        )
+        .textContent =
+        `${progress}%`;
+
+
+    document
+        .getElementById(
+            "overallProgressBar"
+        )
+        .style
+        .width =
+        `${progress}%`;
+
+}
+
+
+/* =========================
+   CALENDAR
+========================= */
+
+function renderCalendar() {
+
+    const year =
+        calendarDate.getFullYear();
+
+
+    const month =
+        calendarDate.getMonth();
+
+
+    const monthNames = [
+
+        "Januari",
+        "Februari",
+        "Maret",
+        "April",
+        "Mei",
+        "Juni",
+        "Juli",
+        "Agustus",
+        "September",
+        "Oktober",
+        "November",
+        "Desember"
+
+    ];
+
+
+    document
+        .getElementById(
+            "calendarTitle"
+        )
+        .textContent =
+        `${monthNames[month]} ${year}`;
+
+
+    const firstDay =
+        new Date(
+            year,
+            month,
+            1
+        ).getDay();
+
+
+    const daysInMonth =
+        new Date(
+            year,
+            month + 1,
+            0
+        ).getDate();
+
+
+    const calendarDays =
+        document.getElementById(
+            "calendarDays"
+        );
+
+
+    calendarDays.innerHTML = "";
+
+
+    for (
+        let i = 0;
+        i < firstDay;
+        i++
+    ) {
+
+        calendarDays.innerHTML += `
+
+            <div class="calendar-day empty">
+            </div>
+
+        `;
+
+    }
+
+
+    const today =
+        new Date();
+
+
+    for (
+        let day = 1;
+        day <= daysInMonth;
+        day++
+    ) {
+
+
+        const dateString =
+
+            `${year}-${
+                String(
+                    month + 1
+                ).padStart(2, "0")
+            }-${
+                String(day)
+                    .padStart(2, "0")
+            }`;
+
+
+        const isToday =
+
+            today.getFullYear() === year &&
+
+            today.getMonth() === month &&
+
+            today.getDate() === day;
+
+
+        const dayTasks =
+            tasks.filter(
+                task =>
+                    task.date ===
+                    dateString
+            );
+
+
+        let taskHTML = "";
+
+
+        dayTasks.forEach(
+            task => {
+
+                let statusClass = "";
+
+
+                if (
+                    task.completed
+                ) {
+
+                    statusClass =
+                        "completed";
+
+                }
+
+                else {
+
+                    const deadline =
+                        new Date(
+                            `${task.date}T${task.time}`
+                        );
+
+
+                    if (
+                        deadline <
+                        new Date()
+                    ) {
+
+                        statusClass =
+                            "overdue";
+
+                    }
+
+                }
+
+
+                taskHTML += `
+
+                    <div
+                        class="calendar-task ${statusClass}"
+                        title="${escapeHTML(
+                            task.name
+                        )}"
+                        onclick="openEdit(${task.id})">
+
+                        ${escapeHTML(
+                            task.name
+                        )}
+
+                    </div>
+
+                `;
+
+            }
+        );
+
+
+        calendarDays.innerHTML += `
+
+            <div class="calendar-day ${
+                isToday
+                    ? "today"
+                    : ""
+            }">
+
+                <div class="calendar-date">
+
+                    ${day}
+
+                </div>
+
+                ${taskHTML}
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================
+   CHANGE MONTH
+========================= */
+
+function changeMonth(change) {
+
+    calendarDate.setMonth(
+        calendarDate.getMonth() +
+        change
+    );
+
+
+    renderCalendar();
+
+}
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHTML(text) {
+
+    if (!text) {
+        return "";
+    }
+
+
+    return String(text)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =========================
+   CLOSE MODAL
+========================= */
+
+document
+    .getElementById(
+        "editModal"
+    )
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target ===
+                this
+            ) {
+
+                closeEdit();
+
+            }
+
+        }
+    );
+
+
+/* =========================
+   AUTO REFRESH DEADLINE
+========================= */
+
+setInterval(
+    function() {
+
+        renderTasks();
+
+    },
+    60000
+);
+
+
+/* =========================
+   INITIALIZE
+========================= */
+
+renderTasks();
+
+renderCalendar();
+
+updateStats();
+
+</script>
 
 </body>
-
 </html>
