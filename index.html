@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
     <title>StudentTask - To-Do List Mahasiswa</title>
 
@@ -13,74 +16,262 @@
 
     <div class="container">
 
+        <!-- ================= HEADER ================= -->
+
         <header>
+
             <h1>🎓 StudentTask</h1>
-            <p>To-Do List Mahasiswa</p>
+
+            <p>
+                To-Do List Mahasiswa
+            </p>
+
         </header>
 
-        <!-- Statistik -->
+
+        <!-- ================= STATISTIK ================= -->
+
         <div class="stats">
 
             <div class="stat-box">
+
                 <h3 id="totalTask">0</h3>
+
                 <p>Total Tugas</p>
+
             </div>
 
+
             <div class="stat-box">
+
                 <h3 id="completedTask">0</h3>
+
                 <p>Selesai</p>
+
             </div>
 
+
             <div class="stat-box">
+
                 <h3 id="pendingTask">0</h3>
+
                 <p>Belum Selesai</p>
+
             </div>
 
         </div>
 
 
-        <!-- Input Tugas -->
+        <!-- ================= PROGRESS ================= -->
+
+        <div class="progress-card">
+
+            <div class="progress-header">
+
+                <span>📊 Progress Tugas</span>
+
+                <strong id="progressText">
+                    0%
+                </strong>
+
+            </div>
+
+
+            <div class="progress-bar">
+
+                <div
+                    id="progressFill"
+                    class="progress-fill">
+                </div>
+
+            </div>
+
+
+            <p id="progressDetail">
+                0 dari 0 tugas selesai
+            </p>
+
+        </div>
+
+
+        <!-- ================= FORM TUGAS ================= -->
+
         <div class="input-section">
+
+            <h2 id="formTitle">
+                ➕ Tambah Tugas
+            </h2>
+
+
+            <!-- Mata Kuliah -->
+
+            <div class="input-group">
+
+                <label for="courseInput">
+                    📚 Mata Kuliah
+                </label>
+
+                <select id="courseInput">
+
+                    <option value="">
+                        Pilih Mata Kuliah
+                    </option>
+
+                    <option value="Pemrograman Web">
+                        Pemrograman Web
+                    </option>
+
+                    <option value="Basis Data">
+                        Basis Data
+                    </option>
+
+                    <option value="Pengolahan Citra Digital">
+                        Pengolahan Citra Digital
+                    </option>
+
+                    <option value="Pemrograman Berorientasi Objek">
+                        Pemrograman Berorientasi Objek
+                    </option>
+
+                    <option value="Jaringan Komputer">
+                        Jaringan Komputer
+                    </option>
+
+                    <option value="Rekayasa Perangkat Lunak">
+                        Rekayasa Perangkat Lunak
+                    </option>
+
+                    <option value="Kecerdasan Buatan">
+                        Kecerdasan Buatan
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Nama Tugas -->
+
+            <div class="input-group">
+
+                <label for="taskInput">
+                    📝 Nama Tugas
+                </label>
+
+                <input
+                    type="text"
+                    id="taskInput"
+                    placeholder="Contoh: Membuat halaman login">
+
+            </div>
+
+
+            <!-- Tanggal dan Jam -->
+
+            <div class="deadline-group">
+
+                <div class="input-group">
+
+                    <label for="dateInput">
+                        📅 Tanggal Deadline
+                    </label>
+
+                    <input
+                        type="date"
+                        id="dateInput">
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label for="timeInput">
+                        🕐 Jam Deadline
+                    </label>
+
+                    <input
+                        type="time"
+                        id="timeInput">
+
+                </div>
+
+            </div>
+
+
+            <!-- Tombol -->
+
+            <div class="form-buttons">
+
+                <button
+                    class="add-button"
+                    onclick="saveTask()"
+                    id="saveButton">
+
+                    + Tambah Tugas
+
+                </button>
+
+
+                <button
+                    class="cancel-button"
+                    onclick="cancelEdit()"
+                    id="cancelButton"
+                    style="display: none;">
+
+                    Batal
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= PENCARIAN ================= -->
+
+        <div class="search-section">
 
             <input
                 type="text"
-                id="taskInput"
-                placeholder="Masukkan tugas kuliah..."
-            >
-
-            <!-- Tanggal + Jam -->
-            <input
-                type="datetime-local"
-                id="dateInput"
-                lang="id"
-            >
-
-            <button onclick="addTask()">
-                Tambah Tugas
-            </button>
+                id="searchInput"
+                placeholder="🔎 Cari tugas atau mata kuliah..."
+                oninput="displayTasks()">
 
         </div>
 
 
-        <!-- Filter -->
+        <!-- ================= FILTER ================= -->
+
         <div class="filter-section">
 
-            <button onclick="filterTasks('all')">
+            <button
+                onclick="filterTasks('all')">
+
                 Semua
+
             </button>
 
-            <button onclick="filterTasks('pending')">
+
+            <button
+                onclick="filterTasks('pending')">
+
                 Belum Selesai
+
             </button>
 
-            <button onclick="filterTasks('completed')">
+
+            <button
+                onclick="filterTasks('completed')">
+
                 Selesai
+
             </button>
 
         </div>
 
 
-        <!-- Daftar Tugas -->
+        <!-- ================= DAFTAR TUGAS ================= -->
+
         <div id="taskList"></div>
 
     </div>
@@ -89,4 +280,5 @@
     <script src="script.js"></script>
 
 </body>
+
 </html>

@@ -1,171 +1,747 @@
-```css
+/* =====================================
+   RESET
+===================================== */
+
 * {
+
     margin: 0;
+
     padding: 0;
+
     box-sizing: border-box;
+
 }
+
+
+/* =====================================
+   BODY
+===================================== */
 
 body {
-    font-family: Arial, sans-serif;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
     background: #f4f6f8;
+
+    color: #222;
+
     min-height: 100vh;
+
     padding: 40px 20px;
+
 }
+
+
+/* =====================================
+   CONTAINER
+===================================== */
 
 .container {
-    max-width: 900px;
+
+    max-width: 950px;
+
     margin: auto;
+
 }
 
-/* Header */
+
+/* =====================================
+   HEADER
+===================================== */
 
 header {
+
     text-align: center;
+
     margin-bottom: 30px;
+
 }
+
 
 header h1 {
-    font-size: 32px;
+
+    font-size: 36px;
+
     margin-bottom: 8px;
+
 }
+
 
 header p {
+
     color: #666;
+
+    font-size: 17px;
+
 }
 
-/* Statistik */
+
+/* =====================================
+   STATISTIK
+===================================== */
 
 .stats {
+
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    margin-bottom: 25px;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+
+    margin-bottom: 20px;
+
 }
+
 
 .stat-box {
+
     background: white;
-    padding: 20px;
-    border-radius: 12px;
+
+    padding: 25px;
+
     text-align: center;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 4px 15px
+        rgba(0, 0, 0, 0.07);
+
 }
+
 
 .stat-box h3 {
-    font-size: 28px;
-    margin-bottom: 5px;
+
+    font-size: 32px;
+
+    margin-bottom: 7px;
+
 }
 
-/* Input */
+
+.stat-box p {
+
+    color: #666;
+
+    font-size: 15px;
+
+}
+
+
+/* =====================================
+   PROGRESS
+===================================== */
+
+.progress-card {
+
+    background: white;
+
+    padding: 22px;
+
+    border-radius: 14px;
+
+    margin-bottom: 20px;
+
+    box-shadow:
+        0 4px 15px
+        rgba(0, 0, 0, 0.07);
+
+}
+
+
+.progress-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 12px;
+
+    font-size: 16px;
+
+}
+
+
+.progress-header strong {
+
+    font-size: 18px;
+
+}
+
+
+.progress-bar {
+
+    height: 13px;
+
+    background: #e5e5e5;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+}
+
+
+.progress-fill {
+
+    height: 100%;
+
+    width: 0%;
+
+    background: #333;
+
+    border-radius: 20px;
+
+    transition:
+        width 0.4s ease;
+
+}
+
+
+.progress-card p {
+
+    margin-top: 9px;
+
+    color: #777;
+
+    font-size: 14px;
+
+}
+
+
+/* =====================================
+   FORM
+===================================== */
 
 .input-section {
+
     background: white;
-    padding: 20px;
-    border-radius: 12px;
-    display: flex;
-    gap: 10px;
+
+    padding: 25px;
+
+    border-radius: 14px;
+
     margin-bottom: 20px;
+
+    box-shadow:
+        0 4px 15px
+        rgba(0, 0, 0, 0.07);
+
 }
 
-.input-section input {
-    padding: 12px;
+
+.input-section h2 {
+
+    font-size: 20px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.input-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+    margin-bottom: 18px;
+
+}
+
+
+.input-group label {
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+}
+
+
+.input-group input,
+.input-group select {
+
+    padding: 13px;
+
     border: 1px solid #ddd;
-    border-radius: 8px;
+
+    border-radius: 9px;
+
+    font-size: 15px;
+
+    background: white;
+
 }
 
-#taskInput {
+
+.input-group input:focus,
+.input-group select:focus {
+
+    outline: none;
+
+    border-color: #555;
+
+}
+
+
+/* =====================================
+   DEADLINE
+===================================== */
+
+.deadline-group {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 15px;
+
+}
+
+
+/* =====================================
+   BUTTON FORM
+===================================== */
+
+.form-buttons {
+
+    display: flex;
+
+    gap: 10px;
+
+}
+
+
+.add-button,
+.cancel-button {
+
     flex: 1;
-}
 
-button {
+    padding: 13px;
+
     border: none;
-    padding: 12px 18px;
-    border-radius: 8px;
+
+    border-radius: 9px;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
     cursor: pointer;
+
+}
+
+
+.add-button {
+
     background: #333;
+
     color: white;
+
 }
 
-button:hover {
-    opacity: 0.8;
+
+.cancel-button {
+
+    background: #ddd;
+
+    color: #333;
+
 }
 
-/* Filter */
+
+.add-button:hover,
+.cancel-button:hover {
+
+    opacity: 0.85;
+
+}
+
+
+/* =====================================
+   SEARCH
+===================================== */
+
+.search-section {
+
+    margin-bottom: 15px;
+
+}
+
+
+.search-section input {
+
+    width: 100%;
+
+    padding: 14px 16px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 10px;
+
+    background: white;
+
+    font-size: 15px;
+
+}
+
+
+.search-section input:focus {
+
+    outline: none;
+
+    border-color: #555;
+
+}
+
+
+/* =====================================
+   FILTER
+===================================== */
 
 .filter-section {
+
     display: flex;
+
     gap: 10px;
+
     margin-bottom: 20px;
+
 }
+
 
 .filter-section button {
+
+    padding: 10px 17px;
+
     background: white;
-    color: #333;
+
     border: 1px solid #ddd;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
 }
 
-/* Task */
+
+.filter-section button:hover {
+
+    background: #eee;
+
+}
+
+
+/* =====================================
+   TASK
+===================================== */
 
 .task {
+
     background: white;
-    padding: 18px;
-    border-radius: 12px;
-    margin-bottom: 12px;
+
+    padding: 20px;
+
+    border-radius: 13px;
+
+    margin-bottom: 13px;
+
     display: flex;
-    align-items: center;
+
     justify-content: space-between;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+
+    align-items: center;
+
+    gap: 20px;
+
+    box-shadow:
+        0 3px 12px
+        rgba(0, 0, 0, 0.06);
+
+    border-left: 5px solid #bbb;
+
 }
+
 
 .task-info {
+
     flex: 1;
+
 }
+
+
+.course-name {
+
+    font-weight: bold;
+
+    font-size: 17px;
+
+    margin-bottom: 8px;
+
+}
+
 
 .task-title {
+
     font-size: 17px;
-    font-weight: bold;
-    margin-bottom: 6px;
+
+    margin-bottom: 9px;
+
 }
+
 
 .task-date {
+
     color: #777;
+
     font-size: 14px;
+
+    margin-bottom: 7px;
+
 }
+
+
+/* =====================================
+   STATUS DEADLINE
+===================================== */
+
+.deadline-status {
+
+    display: inline-block;
+
+    padding: 6px 11px;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+}
+
+
+/* Hari ini */
+
+.status-today {
+
+    background: #ffe3e3;
+
+    color: #d00000;
+
+}
+
+
+/* Besok */
+
+.status-tomorrow {
+
+    background: #fff0d7;
+
+    color: #c76a00;
+
+}
+
+
+/* Masih aman */
+
+.status-safe {
+
+    background: #e4f7e8;
+
+    color: #16803c;
+
+}
+
+
+/* Terlambat */
+
+.status-late {
+
+    background: #ffdada;
+
+    color: #b00000;
+
+}
+
+
+/* Selesai */
+
+.status-completed {
+
+    background: #e8e8e8;
+
+    color: #666;
+
+}
+
+
+/* =====================================
+   TUGAS SELESAI
+===================================== */
+
+.completed {
+
+    border-left-color: #777;
+
+}
+
 
 .completed .task-title {
-    text-decoration: line-through;
+
+    text-decoration:
+        line-through;
+
     color: #999;
+
 }
+
+
+.completed .course-name {
+
+    color: #999;
+
+}
+
+
+/* =====================================
+   ACTION BUTTON
+===================================== */
 
 .task-actions {
+
     display: flex;
-    gap: 8px;
+
+    gap: 7px;
+
 }
+
+
+.task-actions button {
+
+    border: none;
+
+    padding: 9px 12px;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    color: white;
+
+}
+
 
 .complete-btn {
+
     background: #555;
+
 }
+
+
+.edit-btn {
+
+    background: #777;
+
+}
+
 
 .delete-btn {
+
     background: #222;
+
 }
 
-/* Responsive */
 
-@media (max-width: 600px) {
+.task-actions button:hover {
+
+    opacity: 0.8;
+
+}
+
+
+/* =====================================
+   TUGAS KOSONG
+===================================== */
+
+.empty-task {
+
+    background: white;
+
+    padding: 35px;
+
+    text-align: center;
+
+    border-radius: 12px;
+
+    color: #777;
+
+}
+
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media (max-width: 650px) {
+
+    body {
+
+        padding: 25px 15px;
+
+    }
+
 
     .stats {
+
         grid-template-columns: 1fr;
+
     }
 
-    .input-section {
-        flex-direction: column;
+
+    .deadline-group {
+
+        grid-template-columns: 1fr;
+
+        gap: 0;
+
     }
+
 
     .task {
+
         flex-direction: column;
+
         align-items: flex-start;
-        gap: 15px;
+
+    }
+
+
+    .task-actions {
+
+        width: 100%;
+
+    }
+
+
+    .task-actions button {
+
+        flex: 1;
+
+    }
+
+
+    .filter-section {
+
+        flex-wrap: wrap;
+
     }
 
 }
-```
