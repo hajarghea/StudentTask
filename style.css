@@ -9,17 +9,17 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     min-height: 100vh;
-    padding: 30px 15px;
+    padding: 18px 10px;
     color: #29283a;
 
     background:
-        radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.35), transparent 25%),
-        radial-gradient(circle at 90% 20%, rgba(255, 180, 220, 0.25), transparent 25%),
+        radial-gradient(circle at 10% 10%, rgba(255,255,255,.35), transparent 25%),
+        radial-gradient(circle at 90% 20%, rgba(255,180,220,.25), transparent 25%),
         linear-gradient(135deg, #6c63ff, #8f6ee8, #d16ba5);
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1050px;
     margin: auto;
 }
 
@@ -28,19 +28,17 @@ body {
 ========================= */
 
 header {
-    background: rgba(255,255,255,0.95);
-    border-radius: 24px;
-    padding: 28px 32px;
-    margin-bottom: 22px;
+    background: rgba(255,255,255,.95);
+    border-radius: 16px;
+    padding: 17px 22px;
+    margin-bottom: 14px;
 
-    box-shadow:
-        0 15px 35px rgba(46, 35, 94, 0.18);
-
-    border: 1px solid rgba(255,255,255,0.7);
+    box-shadow: 0 8px 22px rgba(46,35,94,.15);
+    border: 1px solid rgba(255,255,255,.7);
 }
 
 .logo {
-    font-size: 32px;
+    font-size: 25px;
     font-weight: 800;
 
     background: linear-gradient(
@@ -55,9 +53,9 @@ header {
 }
 
 .subtitle {
-    margin-top: 7px;
+    margin-top: 4px;
     color: #77748b;
-    font-size: 15px;
+    font-size: 12px;
 }
 
 /* =========================
@@ -67,30 +65,28 @@ header {
 .stats {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-bottom: 20px;
+    gap: 10px;
+    margin-bottom: 14px;
 }
 
 .stat-card {
-    background: rgba(255,255,255,0.96);
-    padding: 22px 15px;
-    border-radius: 18px;
+    background: rgba(255,255,255,.96);
+    padding: 14px 10px;
+    border-radius: 12px;
     text-align: center;
 
-    box-shadow:
-        0 10px 25px rgba(46, 35, 94, 0.13);
+    box-shadow: 0 7px 18px rgba(46,35,94,.11);
 
-    transition: 0.25s ease;
+    transition: .2s ease;
 }
 
 .stat-card:hover {
-    transform: translateY(-4px);
-    box-shadow:
-        0 15px 30px rgba(46, 35, 94, 0.18);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(46,35,94,.15);
 }
 
 .stat-number {
-    font-size: 32px;
+    font-size: 25px;
     font-weight: 800;
 
     background: linear-gradient(
@@ -104,9 +100,9 @@ header {
 }
 
 .stat-title {
-    margin-top: 6px;
+    margin-top: 4px;
     color: #77748b;
-    font-size: 13px;
+    font-size: 11px;
 }
 
 /* =========================
@@ -114,26 +110,27 @@ header {
 ========================= */
 
 .progress-section {
-    background: rgba(255,255,255,0.96);
-    padding: 22px;
-    border-radius: 18px;
-    margin-bottom: 20px;
+    background: rgba(255,255,255,.96);
+    padding: 15px 18px;
+    border-radius: 13px;
+    margin-bottom: 14px;
 
-    box-shadow:
-        0 10px 25px rgba(46, 35, 94, 0.13);
+    box-shadow: 0 7px 18px rgba(46,35,94,.11);
 }
 
 .progress-header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 7px;
+
+    font-size: 12px;
     font-weight: bold;
     color: #444158;
 }
 
 .progress-bar {
     width: 100%;
-    height: 12px;
+    height: 8px;
     background: #eeeafa;
     border-radius: 20px;
     overflow: hidden;
@@ -142,16 +139,15 @@ header {
 .progress-fill {
     height: 100%;
 
-    background:
-        linear-gradient(
-            90deg,
-            #635bff,
-            #9b5de5,
-            #d45087
-        );
+    background: linear-gradient(
+        90deg,
+        #635bff,
+        #9b5de5,
+        #d45087
+    );
 
     border-radius: 20px;
-    transition: width 0.4s ease;
+    transition: width .4s ease;
 }
 
 /* =========================
@@ -159,23 +155,22 @@ header {
 ========================= */
 
 .search-box {
-    background: rgba(255,255,255,0.96);
-    padding: 15px;
-    border-radius: 16px;
-    margin-bottom: 15px;
+    background: rgba(255,255,255,.96);
+    padding: 10px;
+    border-radius: 12px;
+    margin-bottom: 10px;
 
-    box-shadow:
-        0 10px 25px rgba(46, 35, 94, 0.12);
+    box-shadow: 0 7px 18px rgba(46,35,94,.10);
 }
 
 .search-box input {
     width: 100%;
-    padding: 14px 16px;
+    padding: 10px 12px;
 
-    border: 2px solid #eeeafa;
-    border-radius: 12px;
+    border: 1.5px solid #eeeafa;
+    border-radius: 8px;
 
-    font-size: 15px;
+    font-size: 12px;
     outline: none;
 
     background: #faf9ff;
@@ -192,38 +187,38 @@ header {
 
 .filters {
     display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 7px;
+    margin-bottom: 14px;
     flex-wrap: wrap;
 }
 
 .filter-btn {
-    border: 2px solid rgba(255,255,255,0.8);
+    border: 1.5px solid rgba(255,255,255,.8);
 
-    padding: 10px 19px;
-    border-radius: 25px;
+    padding: 7px 13px;
+    border-radius: 20px;
 
     cursor: pointer;
 
-    background: rgba(255,255,255,0.95);
+    background: rgba(255,255,255,.95);
     color: #66627a;
 
+    font-size: 11px;
     font-weight: bold;
 
-    transition: 0.2s ease;
+    transition: .2s ease;
 }
 
 .filter-btn:hover {
-    transform: translateY(-2px);
+    transform: translateY(-1px);
 }
 
 .filter-btn.active {
-    background:
-        linear-gradient(
-            135deg,
-            #635bff,
-            #9b5de5
-        );
+    background: linear-gradient(
+        135deg,
+        #635bff,
+        #9b5de5
+    );
 
     color: white;
     border-color: transparent;
@@ -234,82 +229,80 @@ header {
 ========================= */
 
 .calendar-section {
-    background: rgba(255,255,255,0.97);
-    padding: 25px;
-    border-radius: 20px;
-    margin-bottom: 20px;
+    background: rgba(255,255,255,.97);
+    padding: 17px;
+    border-radius: 14px;
+    margin-bottom: 14px;
 
-    box-shadow:
-        0 12px 30px rgba(46, 35, 94, 0.14);
+    box-shadow: 0 8px 22px rgba(46,35,94,.12);
 }
 
 .calendar-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
 }
 
 .calendar-header h2 {
     color: #38354d;
-    font-size: 22px;
+    font-size: 17px;
 }
 
 .calendar-header button {
     border: none;
 
-    background:
-        linear-gradient(
-            135deg,
-            #635bff,
-            #9b5de5
-        );
+    background: linear-gradient(
+        135deg,
+        #635bff,
+        #9b5de5
+    );
 
     color: white;
 
-    width: 42px;
-    height: 42px;
+    width: 32px;
+    height: 32px;
 
     border-radius: 50%;
 
-    font-size: 25px;
+    font-size: 19px;
     cursor: pointer;
 
-    box-shadow:
-        0 6px 15px rgba(99,91,255,0.3);
+    box-shadow: 0 4px 10px rgba(99,91,255,.25);
 
-    transition: 0.2s;
+    transition: .2s;
 }
 
 .calendar-header button:hover {
-    transform: scale(1.08);
+    transform: scale(1.05);
 }
 
 .calendar-week,
 .calendar-days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 8px;
+    gap: 4px;
 }
 
 .calendar-week div {
     text-align: center;
     font-weight: bold;
     color: #77748b;
-    padding: 8px 0;
+    padding: 5px 0;
+    font-size: 10px;
 }
 
 .calendar-day {
-    min-height: 85px;
+    min-height: 62px;
 
     border: 1px solid #eeeafa;
-    border-radius: 12px;
+    border-radius: 8px;
 
-    padding: 8px;
+    padding: 5px;
 
     background: #fbfaff;
 
-    transition: 0.2s;
+    transition: .2s;
 }
 
 .calendar-day:hover {
@@ -322,39 +315,38 @@ header {
 }
 
 .calendar-day.today {
-    border: 2px solid #8a7cf6;
+    border: 1.5px solid #8a7cf6;
 
-    background:
-        linear-gradient(
-            135deg,
-            #f4f1ff,
-            #fff4fa
-        );
+    background: linear-gradient(
+        135deg,
+        #f4f1ff,
+        #fff4fa
+    );
 }
 
 .calendar-date {
     font-weight: bold;
     color: #55516a;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
+    font-size: 11px;
 }
 
 .calendar-task {
-    font-size: 11px;
+    font-size: 8px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #635bff,
-            #9b5de5
-        );
+    background: linear-gradient(
+        135deg,
+        #635bff,
+        #9b5de5
+    );
 
     color: white;
 
-    padding: 5px;
+    padding: 3px 4px;
 
-    border-radius: 6px;
+    border-radius: 4px;
 
-    margin-top: 4px;
+    margin-top: 3px;
 
     overflow: hidden;
     white-space: nowrap;
@@ -362,30 +354,23 @@ header {
 
     cursor: pointer;
 
-    box-shadow:
-        0 3px 7px rgba(99,91,255,0.2);
-}
-
-.calendar-task:hover {
-    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(99,91,255,.18);
 }
 
 .calendar-task.completed {
-    background:
-        linear-gradient(
-            135deg,
-            #22c55e,
-            #16a34a
-        );
+    background: linear-gradient(
+        135deg,
+        #22c55e,
+        #16a34a
+    );
 }
 
 .calendar-task.overdue {
-    background:
-        linear-gradient(
-            135deg,
-            #ef4444,
-            #dc2626
-        );
+    background: linear-gradient(
+        135deg,
+        #ef4444,
+        #dc2626
+    );
 }
 
 /* =========================
@@ -393,31 +378,30 @@ header {
 ========================= */
 
 .add-task {
-    background: rgba(255,255,255,0.97);
+    background: rgba(255,255,255,.97);
 
-    padding: 28px;
+    padding: 19px;
 
-    border-radius: 20px;
+    border-radius: 14px;
 
-    margin-bottom: 20px;
+    margin-bottom: 14px;
 
-    box-shadow:
-        0 12px 30px rgba(46, 35, 94, 0.14);
+    box-shadow: 0 8px 22px rgba(46,35,94,.12);
 }
 
 .add-title {
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 800;
 
     color: #38354d;
 
-    margin-bottom: 22px;
+    margin-bottom: 14px;
 }
 
 .form-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 18px;
+    gap: 11px;
 }
 
 .form-group {
@@ -426,9 +410,9 @@ header {
 }
 
 .form-group label {
-    margin-bottom: 7px;
+    margin-bottom: 5px;
 
-    font-size: 14px;
+    font-size: 11px;
 
     font-weight: bold;
 
@@ -440,13 +424,13 @@ header {
 .form-group textarea {
     width: 100%;
 
-    padding: 13px;
+    padding: 9px 10px;
 
-    border: 2px solid #eeeafa;
+    border: 1.5px solid #eeeafa;
 
-    border-radius: 11px;
+    border-radius: 8px;
 
-    font-size: 14px;
+    font-size: 12px;
 
     outline: none;
 
@@ -456,7 +440,7 @@ header {
 
     font-family: inherit;
 
-    transition: 0.2s;
+    transition: .2s;
 }
 
 .form-group input:focus,
@@ -466,8 +450,7 @@ header {
 
     background: white;
 
-    box-shadow:
-        0 0 0 3px rgba(138,124,246,0.1);
+    box-shadow: 0 0 0 2px rgba(138,124,246,.1);
 }
 
 .full-width {
@@ -475,7 +458,7 @@ header {
 }
 
 textarea {
-    min-height: 105px;
+    min-height: 70px;
     resize: vertical;
 }
 
@@ -484,11 +467,11 @@ textarea {
 }
 
 .file-name {
-    margin-top: 7px;
+    margin-top: 5px;
 
     color: #858196;
 
-    font-size: 13px;
+    font-size: 11px;
 }
 
 .add-btn {
@@ -496,39 +479,34 @@ textarea {
 
     border: none;
 
-    background:
-        linear-gradient(
-            135deg,
-            #635bff,
-            #9b5de5,
-            #d45087
-        );
+    background: linear-gradient(
+        135deg,
+        #635bff,
+        #9b5de5,
+        #d45087
+    );
 
     color: white;
 
-    padding: 15px;
+    padding: 10px;
 
-    border-radius: 11px;
+    border-radius: 8px;
 
-    font-size: 15px;
+    font-size: 12px;
 
     font-weight: bold;
 
     cursor: pointer;
 
-    margin-top: 20px;
+    margin-top: 12px;
 
-    box-shadow:
-        0 8px 18px rgba(99,91,255,0.28);
+    box-shadow: 0 5px 12px rgba(99,91,255,.24);
 
-    transition: 0.2s;
+    transition: .2s;
 }
 
 .add-btn:hover {
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 12px 22px rgba(99,91,255,0.35);
+    transform: translateY(-1px);
 }
 
 /* =========================
@@ -537,34 +515,31 @@ textarea {
 
 .task-list {
     display: grid;
-    gap: 18px;
+    gap: 10px;
 }
 
 .task-card {
-    background: rgba(255,255,255,0.97);
+    background: rgba(255,255,255,.97);
 
-    padding: 23px;
+    padding: 15px;
 
-    border-radius: 18px;
+    border-radius: 12px;
 
-    box-shadow:
-        0 10px 25px rgba(46, 35, 94, 0.12);
+    box-shadow: 0 7px 18px rgba(46,35,94,.10);
 
-    border-left: 5px solid #8a7cf6;
+    border-left: 4px solid #8a7cf6;
 
-    transition: 0.2s;
+    transition: .2s;
 }
 
 .task-card:hover {
-    transform: translateY(-2px);
+    transform: translateY(-1px);
 
-    box-shadow:
-        0 15px 30px rgba(46, 35, 94, 0.17);
+    box-shadow: 0 10px 22px rgba(46,35,94,.14);
 }
 
 .task-card.completed {
-    opacity: 0.75;
-
+    opacity: .75;
     border-left-color: #22c55e;
 }
 
@@ -575,44 +550,43 @@ textarea {
 .task-top {
     display: flex;
     justify-content: space-between;
-    gap: 15px;
+    gap: 10px;
     align-items: flex-start;
 }
 
 .task-name {
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 800;
     color: #343144;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
 }
 
 .category-badge {
     display: inline-block;
 
-    background:
-        linear-gradient(
-            135deg,
-            #eeeaff,
-            #f9eaf4
-        );
+    background: linear-gradient(
+        135deg,
+        #eeeaff,
+        #f9eaf4
+    );
 
     color: #685ee0;
 
-    padding: 6px 11px;
+    padding: 4px 8px;
 
-    border-radius: 20px;
+    border-radius: 15px;
 
-    font-size: 12px;
+    font-size: 10px;
 
     font-weight: bold;
 }
 
 .priority {
-    padding: 7px 12px;
+    padding: 5px 8px;
 
-    border-radius: 20px;
+    border-radius: 15px;
 
-    font-size: 11px;
+    font-size: 9px;
 
     font-weight: bold;
 
@@ -634,16 +608,20 @@ textarea {
     color: #18894b;
 }
 
+/* =========================
+   DEADLINE
+========================= */
+
 .deadline {
-    margin-top: 15px;
+    margin-top: 9px;
 
-    padding: 12px;
+    padding: 8px;
 
-    border-radius: 10px;
+    border-radius: 7px;
 
     background: #f7f6fb;
 
-    font-size: 14px;
+    font-size: 11px;
 }
 
 .deadline.today {
@@ -664,21 +642,24 @@ textarea {
 .deadline.overdue {
     background: #ffd9df;
     color: #b51f3d;
-
     font-weight: bold;
 }
 
+/* =========================
+   PROGRESS TUGAS
+========================= */
+
 .task-progress {
-    margin-top: 15px;
+    margin-top: 10px;
 }
 
 .task-progress-header {
     display: flex;
     justify-content: space-between;
 
-    font-size: 13px;
+    font-size: 10px;
 
-    margin-bottom: 7px;
+    margin-bottom: 4px;
 
     color: #656177;
 }
@@ -686,7 +667,7 @@ textarea {
 .task-progress-bar {
     width: 100%;
 
-    height: 8px;
+    height: 6px;
 
     background: #eeeafa;
 
@@ -698,12 +679,11 @@ textarea {
 .task-progress-fill {
     height: 100%;
 
-    background:
-        linear-gradient(
-            90deg,
-            #635bff,
-            #9b5de5
-        );
+    background: linear-gradient(
+        90deg,
+        #635bff,
+        #9b5de5
+    );
 
     border-radius: 10px;
 }
@@ -713,30 +693,25 @@ textarea {
 ========================= */
 
 .task-note {
-    background:
-        linear-gradient(
-            135deg,
-            #fff9df,
-            #fff5f9
-        );
+    background: linear-gradient(
+        135deg,
+        #fff9df,
+        #fff5f9
+    );
 
-    border-left: 4px solid #e9b949;
+    border-left: 3px solid #e9b949;
 
-    padding: 13px;
+    padding: 8px;
 
-    margin-top: 15px;
+    margin-top: 9px;
 
-    border-radius: 8px;
+    border-radius: 6px;
 
-    font-size: 13px;
+    font-size: 11px;
 
-    line-height: 1.5;
+    line-height: 1.4;
 
     color: #615a45;
-}
-
-.task-note strong {
-    color: #4d4735;
 }
 
 /* =========================
@@ -744,20 +719,19 @@ textarea {
 ========================= */
 
 .task-file {
-    margin-top: 12px;
+    margin-top: 8px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #f1efff,
-            #faf1f7
-        );
+    background: linear-gradient(
+        135deg,
+        #f1efff,
+        #faf1f7
+    );
 
-    padding: 12px;
+    padding: 8px;
 
-    border-radius: 9px;
+    border-radius: 7px;
 
-    font-size: 13px;
+    font-size: 11px;
 
     color: #55516a;
 }
@@ -768,29 +742,29 @@ textarea {
 
 .task-actions {
     display: flex;
-    gap: 8px;
+    gap: 5px;
     flex-wrap: wrap;
-    margin-top: 18px;
+    margin-top: 10px;
 }
 
 .task-actions button {
     border: none;
 
-    padding: 9px 13px;
+    padding: 6px 9px;
 
-    border-radius: 8px;
+    border-radius: 6px;
 
     cursor: pointer;
 
-    font-size: 13px;
+    font-size: 10px;
 
     font-weight: bold;
 
-    transition: 0.2s;
+    transition: .2s;
 }
 
 .task-actions button:hover {
-    transform: translateY(-2px);
+    transform: translateY(-1px);
 }
 
 .complete-btn {
@@ -799,12 +773,11 @@ textarea {
 }
 
 .update-btn {
-    background:
-        linear-gradient(
-            135deg,
-            #635bff,
-            #8069e8
-        );
+    background: linear-gradient(
+        135deg,
+        #635bff,
+        #8069e8
+    );
 
     color: white;
 }
@@ -837,15 +810,15 @@ textarea {
 
     inset: 0;
 
-    background: rgba(35, 28, 70, 0.62);
+    background: rgba(35,28,70,.62);
 
     justify-content: center;
 
     align-items: center;
 
-    padding: 20px;
+    padding: 15px;
 
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(4px);
 }
 
 .modal.show {
@@ -855,42 +828,41 @@ textarea {
 .modal-content {
     width: 100%;
 
-    max-width: 600px;
+    max-width: 500px;
 
-    max-height: 90vh;
+    max-height: 88vh;
 
     overflow-y: auto;
 
     background: white;
 
-    padding: 28px;
+    padding: 20px;
 
-    border-radius: 20px;
+    border-radius: 14px;
 
-    box-shadow:
-        0 25px 60px rgba(20,15,50,0.3);
+    box-shadow: 0 20px 45px rgba(20,15,50,.28);
 }
 
 .modal-title {
-    font-size: 23px;
+    font-size: 19px;
 
     font-weight: 800;
 
-    margin-bottom: 22px;
+    margin-bottom: 15px;
 
     color: #38354d;
 }
 
 .modal-group {
-    margin-bottom: 16px;
+    margin-bottom: 11px;
 }
 
 .modal-group label {
     display: block;
 
-    margin-bottom: 7px;
+    margin-bottom: 5px;
 
-    font-size: 14px;
+    font-size: 11px;
 
     font-weight: bold;
 
@@ -902,15 +874,15 @@ textarea {
 .modal-group textarea {
     width: 100%;
 
-    padding: 12px;
+    padding: 9px;
 
-    border: 2px solid #eeeafa;
+    border: 1.5px solid #eeeafa;
 
-    border-radius: 10px;
+    border-radius: 8px;
 
     font-family: inherit;
 
-    font-size: 14px;
+    font-size: 12px;
 
     outline: none;
 }
@@ -926,7 +898,7 @@ textarea {
 
     align-items: center;
 
-    gap: 15px;
+    gap: 10px;
 }
 
 .progress-input input {
@@ -934,46 +906,49 @@ textarea {
 }
 
 .progress-number {
-    min-width: 45px;
+    min-width: 35px;
 
     font-weight: bold;
+
+    font-size: 12px;
 
     color: #685ee0;
 }
 
 .edit-file {
-    background:
-        linear-gradient(
-            135deg,
-            #f1efff,
-            #faf1f7
-        );
+    background: linear-gradient(
+        135deg,
+        #f1efff,
+        #faf1f7
+    );
 
-    padding: 15px;
+    padding: 10px;
 
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
 .edit-file-buttons {
     display: flex;
 
-    gap: 8px;
+    gap: 5px;
 
     flex-wrap: wrap;
 
-    margin-top: 10px;
+    margin-top: 7px;
 }
 
 .edit-file-buttons button {
     border: none;
 
-    padding: 9px 12px;
+    padding: 7px 9px;
 
-    border-radius: 8px;
+    border-radius: 6px;
 
     cursor: pointer;
 
     color: white;
+
+    font-size: 10px;
 
     font-weight: bold;
 }
@@ -983,19 +958,21 @@ textarea {
 
     justify-content: flex-end;
 
-    gap: 10px;
+    gap: 7px;
 
-    margin-top: 20px;
+    margin-top: 14px;
 }
 
 .modal-actions button {
     border: none;
 
-    padding: 11px 18px;
+    padding: 8px 13px;
 
-    border-radius: 9px;
+    border-radius: 7px;
 
     cursor: pointer;
+
+    font-size: 11px;
 
     font-weight: bold;
 }
@@ -1006,12 +983,11 @@ textarea {
 }
 
 .save-btn {
-    background:
-        linear-gradient(
-            135deg,
-            #635bff,
-            #9b5de5
-        );
+    background: linear-gradient(
+        135deg,
+        #635bff,
+        #9b5de5
+    );
 
     color: white;
 }
@@ -1021,24 +997,22 @@ textarea {
 ========================= */
 
 .empty-state {
-    background: rgba(255,255,255,0.97);
+    background: rgba(255,255,255,.97);
 
-    padding: 55px 20px;
+    padding: 35px 15px;
 
-    border-radius: 18px;
+    border-radius: 14px;
 
     text-align: center;
 
     color: #77748b;
 
-    box-shadow:
-        0 10px 25px rgba(46, 35, 94, 0.12);
+    box-shadow: 0 7px 18px rgba(46,35,94,.10);
 }
 
 .empty-state .icon {
-    font-size: 52px;
-
-    margin-bottom: 10px;
+    font-size: 40px;
+    margin-bottom: 7px;
 }
 
 /* =========================
@@ -1046,7 +1020,7 @@ textarea {
 ========================= */
 
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -1064,8 +1038,13 @@ textarea {
 
 @media (max-width: 800px) {
 
+    body {
+        padding: 12px 8px;
+    }
+
     .stats {
         grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
     }
 
     .form-grid {
@@ -1078,12 +1057,12 @@ textarea {
     }
 
     .calendar-day {
-        min-height: 65px;
-        padding: 5px;
+        min-height: 55px;
+        padding: 4px;
     }
 
     .calendar-task {
-        font-size: 9px;
+        font-size: 8px;
     }
 
 }
@@ -1091,48 +1070,77 @@ textarea {
 @media (max-width: 500px) {
 
     body {
-        padding: 15px 10px;
+        padding: 8px 6px;
     }
 
     header {
-        padding: 22px;
+        padding: 15px;
+        border-radius: 12px;
     }
 
     .logo {
-        font-size: 27px;
+        font-size: 21px;
+    }
+
+    .subtitle {
+        font-size: 10px;
     }
 
     .stats {
-        gap: 10px;
+        gap: 6px;
+    }
+
+    .stat-card {
+        padding: 10px 6px;
     }
 
     .stat-number {
-        font-size: 25px;
+        font-size: 20px;
     }
 
-    .task-top {
-        flex-direction: column;
+    .stat-title {
+        font-size: 9px;
     }
 
     .calendar-section {
-        padding: 12px;
+        padding: 10px;
     }
 
     .calendar-week,
     .calendar-days {
-        gap: 3px;
+        gap: 2px;
     }
 
     .calendar-day {
-        min-height: 55px;
-        font-size: 11px;
+        min-height: 48px;
+        padding: 3px;
+    }
+
+    .calendar-date {
+        font-size: 9px;
     }
 
     .calendar-task {
-        padding: 3px;
-        font-size: 8px;
+        padding: 2px;
+        font-size: 7px;
+    }
+
+    .add-task {
+        padding: 14px;
+    }
+
+    .task-card {
+        padding: 11px;
+    }
+
+    .task-name {
+        font-size: 15px;
+    }
+
+    .task-actions button {
+        padding: 5px 7px;
+        font-size: 9px;
     }
 
 }
-
 </style>
